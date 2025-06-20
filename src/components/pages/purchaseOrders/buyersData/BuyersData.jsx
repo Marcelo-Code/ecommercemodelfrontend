@@ -69,7 +69,7 @@ export const BuyersData = (buyerDataProps) => {
     <Box className="generalContainer">
       {Object.keys(createdPurchaseOrder).length === 0 && (
         <>
-          <Box className="generalTitle">
+          <Box className="generalSubTitle">
             Dejanos tus datos para completar tu compra
           </Box>
           <form onSubmit={handleSubmit}>

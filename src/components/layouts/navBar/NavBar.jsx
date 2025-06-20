@@ -91,16 +91,8 @@ export const NavBar = (navBarProps) => {
           </Tooltip>
         )}
 
-        {isLoggedIn ? (
+        {isLoggedIn && (
           <Box className="logged">{loggedUser ? loggedUser : "User"}</Box>
-        ) : (
-          <Tooltip title="Ingresar" placement="top-end" arrow>
-            <Link to="/login">
-              <IconButton>
-                <Icons.PersonIcon sx={navBarIcon} />
-              </IconButton>
-            </Link>
-          </Tooltip>
         )}
       </Box>
     </div>

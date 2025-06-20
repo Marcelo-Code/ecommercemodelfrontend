@@ -64,4 +64,9 @@ export const userOptions = [
     option: "Productos",
     link: "/products",
   },
+  {
+    icon: <Icons.PersonIcon />,
+    option: "Ingresar",
+    link: "/login",
+  },
 ];
