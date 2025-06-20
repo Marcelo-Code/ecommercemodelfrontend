@@ -1,0 +1,17 @@
+@font-face {
+  font-family: "roboto";
+  src: url("/roboto.ttf") format("truetype");
+}
+
+.custom-toast {
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: normal;
+  font-size: 15px;
+}
+.custom-icon {
+  color: white;
+}
+
+.confirmationAlertPopup {
+  font-family: Arial, Helvetica, sans-serif;
+}

@@ -1,0 +1,30 @@
+@font-face {
+  font-family: "bell";
+  src: url("/fonts/bellGothicStdBlack.otf");
+}
+
+.footerContainer {
+  bottom: 0px;
+  width: 100%;
+  height: auto;
+  text-align: center;
+  /* margin-top: 100px; */
+}
+
+.footerTitle {
+  padding: 20px;
+  font-family: "bell";
+  /* text-shadow: 0 0 20px black; */
+  font-size: 30px;
+  text-align: center;
+}
+
+.footerSocialMedia {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 15px;
+  width: 100%;
+  gap: 10px;
+}

@@ -1,0 +1,14 @@
+@font-face {
+  font-family: "roboto";
+  src: url("/fonts/roboto.ttf");
+}
+
+.chartContainer {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  font-family: "roboto";
+  font-size: medium;
+  margin-top: 10px;
+  width: 100%;
+}

@@ -1,0 +1,24 @@
+.userCard {
+  position: relative;
+  overflow: hidden;
+}
+
+.userCard:hover .userCardActions {
+  right: 0px;
+}
+
+.userCardActions {
+  width: 100%;
+  height: 50px;
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  gap: 10px;
+  position: absolute;
+  top: 0;
+  right: 100%;
+  transition: right 0.3s ease;
+
+  background-color: rgba(255, 255, 255, 0.8);
+  z-index: 4;
+}
