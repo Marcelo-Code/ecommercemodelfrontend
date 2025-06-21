@@ -1,8 +1,6 @@
 const createPreferenceUrl = import.meta.env.VITE_CREATE_PREFERENCE_URL;
 
-export const createPreference = async ({ cart, formData }) => {
-  console.log(cart, formData);
-
+export const createPreference = async (cart, formData) => {
   try {
     const response = await fetch(createPreferenceUrl, {
       method: "POST",
