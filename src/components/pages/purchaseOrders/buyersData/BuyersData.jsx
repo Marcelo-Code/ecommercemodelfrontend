@@ -18,12 +18,8 @@ import {
   dateFormat,
   generalBackGroundColor,
 } from "../../../../utils/helpers";
-import { FormButtonGroupContainer } from "../../../common/formButtonGroup/FormButtonGroupContainer";
 import { currencyFormat } from "../../../common/currencyFormat/CurrencyFormatContainer";
 import { Icons } from "../../../../assets/Icons";
-import { Link } from "react-router-dom";
-import { Wallet } from "@mercadopago/sdk-react";
-import { BackButtonContainer } from "../../../common/backButton/BackButtonContainer";
 
 export const BuyersData = (buyerDataProps) => {
   const {
@@ -34,7 +30,6 @@ export const BuyersData = (buyerDataProps) => {
     createdPurchaseOrder,
     downloadPDF,
     formRef,
-    preferenceId,
   } = buyerDataProps;
 
   const buttonGroupContainerProps = {

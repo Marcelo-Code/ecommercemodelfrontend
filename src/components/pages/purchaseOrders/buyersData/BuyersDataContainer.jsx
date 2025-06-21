@@ -1,5 +1,8 @@
 import { useContext, useEffect, useRef, useState } from "react";
-import { createPurchaseOrder } from "../../../../services/api/purchaseOrders";
+import {
+  createPurchaseOrder,
+  getPurchaseOrders,
+} from "../../../../services/api/purchaseOrders";
 import {
   errorToastifyAlert,
   successToastifyAlert,
@@ -11,6 +14,8 @@ import { useNavigate } from "react-router-dom";
 import { getData } from "../../../../services/api/data";
 import html2pdf from "html2pdf.js";
 import { initMercadoPago } from "@mercadopago/sdk-react";
+import { createPreference } from "../../../../services/api/mercadoPago";
+import { handleError } from "../../../../utils/helpers";
 
 export const BuyersDataContainer = () => {
   const [formData, setFormData] = useState({
@@ -73,53 +78,28 @@ export const BuyersDataContainer = () => {
     }
   }, []);
 
-  const handleBuy = () => {
-    return fetch(createPreferenceUrl, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        cart,
-        payer: {
-          email: formData.buyer_email,
-        },
-      }),
-    })
-      .then((response) => {
-        if (!response.ok) throw new Error(response.statusText);
-        else return response.json();
-      })
-
-      .then((data) => {
-        if (data.preference_id) return data.preference_id;
-        else throw new Error("No se recibio preference_id");
-      });
-  };
-
-  const [preferenceId, setPreferenceId] = useState(null);
-
   const handleSubmit = (event) => {
     event.preventDefault();
     setIsLoading(true);
 
-    Promise.all([
-      // getData(),
-      // createPurchaseOrder(cart, formData, totalPrice),
-      handleBuy(),
-    ])
-      .then(
-        ([
-          // dataResponse, orderResponse,
-          buyResponse,
-        ]) => {
-          const preferenceId = buyResponse;
-
-          navigate(`/purchaseOrders/finalize/${preferenceId}`, {
-            state: { cart, formData },
-          });
+    //Además de generar la preferencia se prueba el estado de la DB orden de compras
+    //para asegurar el correcto funcionamiento antes de realizar el pago
+    Promise.all([getPurchaseOrders(), createPreference(cart, formData)])
+      .then(([purchaseOrdersResponse, createPreferenceResponse]) => {
+        if (!createPreferenceResponse.success) {
+          handleError(createPreferenceResponse);
         }
-      )
+
+        if (purchaseOrdersResponse.status !== 200) {
+          handleError(purchaseOrdersResponse);
+        }
+
+        const preferenceId = createPreferenceResponse.data.preference_id;
+
+        navigate(`/purchaseOrders/finalize/${preferenceId}`, {
+          state: { cart, formData },
+        });
+      })
       .catch((error) => {
         errorToastifyAlert(error.message || "Ocurrió un error inesperado");
       })
@@ -178,7 +158,6 @@ export const BuyersDataContainer = () => {
     totalPrice,
     downloadPDF,
     formRef,
-    preferenceId,
   };
 
   return <BuyersData {...buyersDataProps} />;
