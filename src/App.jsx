@@ -67,7 +67,7 @@ function App() {
               element={<UpdatePasswordContainer />}
             />
             {/* 404 */}
-            <Route path="*" element={<NotFoundContainer />} />
+            {/* <Route path="*" element={<NotFoundContainer />} /> */}
             {/* Rutas protegidas para el admin */}
             {/* Lista de usuarios */}
             <Route
