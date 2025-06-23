@@ -91,28 +91,43 @@ export const DownloadPurchaseOrderContainer = () => {
       <Box className="generalContainer">
         <Box className="generalTitle">¡Gracias por tu compra!</Box>
         <Box className="generalSubTitle">
-          En breve nos contactaremos para coordinar tu entrega y el modo de pago
+          En breve nos contactaremos para coordinar la entrega
         </Box>
         <Box ref={formRef}>
           <Box
             sx={{
               display: "flex",
               justifyContent: "center",
-              mb: 2,
-              mt: 3,
-              pb: 2,
               alignItems: "center",
-              gap: 2,
-              fontSize: "20px",
               borderBottom: "1px solid black",
+              fontSize: "15px",
+              gap: 3,
+              pb: 2,
+              mb: 2,
+              mt: 2,
             }}
           >
             <Box>
               <img src="/images/logo2.png" width={60} alt="logo" />
             </Box>
-            <Box>Orden de compra nro: {purchaseOrder.order.id}</Box>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Box>
+                <b>Orden de compra nro: </b>
+                {purchaseOrder.order.id}
+              </Box>
+              <Box>
+                <b>Comprobante de pago nro: </b>
+                {paymentId}
+              </Box>
+            </Box>
           </Box>
-          <Box>Comprobante de pago nro: {paymentId}</Box>
           <Box
             sx={{
               display: "flex",
@@ -218,37 +233,37 @@ export const DownloadPurchaseOrderContainer = () => {
             </TableContainer>
           </Box>
         </Box>
-      </Box>
-      <Box
-        sx={{
-          width: "100%",
-          display: "flex",
-          justifyContent: "center",
-          marginTop: 4,
-          flexWrap: "wrap",
-          gap: 3,
-        }}
-      >
-        <Button
+        <Box
           sx={{
             width: "100%",
-            maxWidth: "340px",
-            border: "1px solid black",
-            color: "white",
-            backgroundColor: buttonColor,
-            "&:active": {
-              backgroundColor: generalBackGroundColor,
-              color: "white",
-              border: `1px solid white`,
-            },
+            display: "flex",
+            justifyContent: "center",
+            mt: 3,
+            mb: 3,
+            flexWrap: "wrap",
           }}
-          onClick={() => downloadPDF()}
-          variant="outlined"
-          size="small"
-          startIcon={<Icons.DownloadIcon />}
         >
-          Descargar orden de compra
-        </Button>
+          <Button
+            sx={{
+              width: "100%",
+              maxWidth: "340px",
+              border: "1px solid black",
+              color: "white",
+              backgroundColor: buttonColor,
+              "&:active": {
+                backgroundColor: generalBackGroundColor,
+                color: "white",
+                border: `1px solid white`,
+              },
+            }}
+            onClick={() => downloadPDF()}
+            variant="outlined"
+            size="small"
+            startIcon={<Icons.DownloadIcon />}
+          >
+            Descargar orden de compra
+          </Button>
+        </Box>
       </Box>
     </>
   );
