@@ -1,7 +1,9 @@
 import {
   Box,
+  Button,
   Paper,
   Table,
+  TableBody,
   TableCell,
   TableContainer,
   TableHead,
@@ -21,15 +23,15 @@ import {
 import { currencyFormat } from "../../../common/currencyFormat/CurrencyFormatContainer";
 import { getPurchaseOrderByPaymentId } from "../../../../services/api/purchaseOrders";
 import { LoadingContainer } from "../../loading/LoadingContainer";
+import { Icons } from "../../../../assets/Icons";
 
 export const DownloadPurchaseOrderContainer = () => {
-  const { createdPurchaseOrder, clearCart, preferenceId } =
-    useContext(GeneralContext);
+  const { clearCart } = useContext(GeneralContext);
 
   const [isLoading, setIsLoading] = useState(false);
-  const [purchaseOrder, setPurchaseOrder] = useState({});
+  const [purchaseOrder, setPurchaseOrder] = useState(null);
 
-  const { paymentId } = useParams();
+  const { preferenceId } = useParams();
 
   const navigate = useNavigate();
 
@@ -55,9 +57,12 @@ export const DownloadPurchaseOrderContainer = () => {
   };
 
   useEffect(() => {
+    setIsLoading(true);
+    console.log(preferenceId);
     getPurchaseOrderByPaymentId(preferenceId)
       .then((response) => {
         setPurchaseOrder(response.data);
+        console.log(response);
       })
       .catch((error) => {
         console.log(error);
@@ -67,9 +72,14 @@ export const DownloadPurchaseOrderContainer = () => {
       });
   }, []);
 
-  if (isLoading) {
+  if (isLoading || !purchaseOrder) {
     return <LoadingContainer />;
   }
+
+  const totalPrice = purchaseOrder.purchaseItems.reduce(
+    (acc, item) => acc + item.price * item.quantity,
+    0
+  );
 
   return (
     <>
@@ -166,7 +176,7 @@ export const DownloadPurchaseOrderContainer = () => {
                       }}
                     >
                       <TableCell component="th" scope="row">
-                        {item.description}
+                        {item.products.description}
                       </TableCell>
                       <TableCell align="center">{item.quantity}</TableCell>
                       <TableCell align="right" style={{ whiteSpace: "nowrap" }}>
@@ -194,7 +204,7 @@ export const DownloadPurchaseOrderContainer = () => {
                         whiteSpace: "nowrap",
                       }}
                     >
-                      {currencyFormat(createdPurchaseOrder.totalPrice)}
+                      {currencyFormat(totalPrice)}
                     </TableCell>
                   </TableRow>
                 </TableBody>

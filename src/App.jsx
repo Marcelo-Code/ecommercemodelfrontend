@@ -221,7 +221,7 @@ function App() {
               }
             />
             <Route
-              path="/checkout/success"
+              path="/checkout/success/:preferenceId"
               element={<DownloadPurchaseOrderContainer />}
             />
           </Routes>
