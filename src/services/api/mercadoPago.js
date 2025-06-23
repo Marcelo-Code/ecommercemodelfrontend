@@ -1,4 +1,5 @@
 const createPreferenceUrl = import.meta.env.VITE_CREATE_PREFERENCE_URL;
+const getReceiptUrl = import.meta.env.VITE_GET_RECEIPT_URL;
 
 export const createPreference = async ({ cart, formData }) => {
   try {
@@ -41,6 +42,37 @@ export const createPreference = async ({ cart, formData }) => {
         init_point: data.data.init_point,
       },
     };
+  } catch (error) {
+    return {
+      success: false,
+      code: error?.response?.status || 500,
+      message: error.message || "Error desconocido",
+      error,
+    };
+  }
+};
+
+export const getReceipt = async (paymentId) => {
+  try {
+    const response = await fetch(getReceiptUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        paymentId,
+      }),
+    });
+    const data = await response.json();
+
+    if (!response.ok || data.status === "error") {
+      return {
+        success: false,
+        code: response.status,
+        message: data.mensaje,
+        error: data.data,
+      };
+    }
   } catch (error) {
     return {
       success: false,

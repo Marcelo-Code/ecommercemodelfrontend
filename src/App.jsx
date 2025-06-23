@@ -66,8 +66,6 @@ function App() {
               path="/updatePassword"
               element={<UpdatePasswordContainer />}
             />
-            {/* 404 */}
-            {/* <Route path="*" element={<NotFoundContainer />} /> */}
             {/* Rutas protegidas para el admin */}
             {/* Lista de usuarios */}
             <Route
@@ -224,6 +222,8 @@ function App() {
               path="/checkout/success"
               element={<DownloadPurchaseOrderContainer />}
             />
+            {/* 404 */}
+            <Route path="*" element={<NotFoundContainer />} />
           </Routes>
           <FooterContainer />
         </ConfirmProvider>
