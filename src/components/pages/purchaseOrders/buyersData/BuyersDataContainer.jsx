@@ -84,7 +84,7 @@ export const BuyersDataContainer = () => {
 
     //Además de generar la preferencia se prueba el estado de la DB orden de compras
     //para asegurar el correcto funcionamiento antes de realizar el pago
-    Promise.all([getPurchaseOrders(), createPreference(cart, formData)])
+    Promise.all([getPurchaseOrders(), createPreference({ cart, formData })])
       .then(([purchaseOrdersResponse, createPreferenceResponse]) => {
         if (!createPreferenceResponse.success) {
           handleError(createPreferenceResponse);
