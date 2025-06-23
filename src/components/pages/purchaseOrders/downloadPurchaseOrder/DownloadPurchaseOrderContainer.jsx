@@ -13,8 +13,8 @@ import {
 import "../../../../assets/css/generalStyles.css";
 import { useContext, useEffect, useRef, useState } from "react";
 import { GeneralContext } from "../../../../context/GeneralContext";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { html2pdf } from "html2pdf.js";
+import { useLocation, useNavigate } from "react-router-dom";
+import html2pdf from "html2pdf.js";
 import {
   buttonColor,
   dateFormat,
@@ -228,29 +228,6 @@ export const DownloadPurchaseOrderContainer = () => {
           gap: 3,
         }}
       >
-        {/* <Button
-              sx={{
-                width: "100%",
-                maxWidth: "340px",
-                border: "1px solid black",
-                color: "white",
-                backgroundColor: buttonColor,
-                "&:active": {
-                  backgroundColor: generalBackGroundColor,
-                  color: "white",
-                  border: `1px solid white`,
-                },
-              }}
-              component="a"
-              href={whatsappUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              variant="outlined"
-              size="small"
-              startIcon={<Icons.WhatsAppIcon />}
-            >
-              Enviar por Whatsapp
-            </Button> */}
         <Button
           sx={{
             width: "100%",
