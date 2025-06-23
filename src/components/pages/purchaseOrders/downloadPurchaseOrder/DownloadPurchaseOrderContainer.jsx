@@ -50,7 +50,7 @@ export const DownloadPurchaseOrderContainer = () => {
     html2pdf()
       .set({
         margin: 1,
-        filename: `Nativo_orden_de_compra_${purchaseOrder.id}.pdf`,
+        filename: `Nativo_orden_de_compra_${purchaseOrder.order.id}.pdf`,
         image: { type: "jpeg", quality: 0.98 },
         html2canvas: { scale: 2 },
         jsPDF: { unit: "in", format: "letter", orientation: "portrait" },
@@ -112,6 +112,7 @@ export const DownloadPurchaseOrderContainer = () => {
             </Box>
             <Box>Orden de compra nro: {purchaseOrder.order.id}</Box>
           </Box>
+          <Box>Comprobante de pago nro: {paymentId}</Box>
           <Box
             sx={{
               display: "flex",
