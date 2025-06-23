@@ -68,7 +68,7 @@ export const getReceipt = async (paymentId) => {
         success: false,
         code: response.status,
         message: data.message,
-        error: data.data,
+        error: data.error,
       };
     }
     return {
