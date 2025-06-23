@@ -24,6 +24,7 @@ import { currencyFormat } from "../../../common/currencyFormat/CurrencyFormatCon
 import { getPurchaseOrderByPaymentId } from "../../../../services/api/purchaseOrders";
 import { LoadingContainer } from "../../loading/LoadingContainer";
 import { Icons } from "../../../../assets/Icons";
+import { getReceipt } from "../../../../services/api/mercadoPago";
 
 export const DownloadPurchaseOrderContainer = () => {
   const { clearCart } = useContext(GeneralContext);
@@ -62,11 +63,11 @@ export const DownloadPurchaseOrderContainer = () => {
   2;
   useEffect(() => {
     setIsLoading(true);
-    console.log(paymentId);
-    getPurchaseOrderByPaymentId(paymentId)
-      .then((response) => {
-        setPurchaseOrder(response.data);
-        console.log(response);
+
+    Promise.all([getPurchaseOrderByPaymentId(paymentId), getReceipt(paymentId)])
+      .then(([purchaseOrderResponse, receiptResponse]) => {
+        setPurchaseOrder(purchaseOrderResponse.data);
+        console.log(receiptResponse);
       })
       .catch((error) => {
         console.log(error);
