@@ -47,6 +47,30 @@ export const getPurchaseOrder = async (orderId) => {
   }
 };
 
+export const getPurchaseOrderByPaymentId = async (paymentId) => {
+  try {
+    const { data, error } = await supabaseClient
+      .from("purchase_orders")
+      .select("*")
+      .eq("payment_id", paymentId)
+      .single();
+
+    if (error) throw error;
+
+    return {
+      status: 200,
+      message: "Orden obtenida con éxito",
+      data,
+    };
+  } catch (error) {
+    return {
+      status: 500,
+      message: "Error al obtener la orden",
+      error,
+    };
+  }
+};
+
 export const getPurchaseOrdersItems = async (orderId) => {
   try {
     const { data, error } = await supabaseClient

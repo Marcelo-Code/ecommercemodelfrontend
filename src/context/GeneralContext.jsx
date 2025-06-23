@@ -13,6 +13,8 @@ export const GeneralContextProvider = ({ children }) => {
     return stored === "true";
   });
 
+  const [preferenceId, setPreferenceId] = useState(null);
+
   //Variables que mantienen los valores de los filtros activos
   const [filters, setFilters] = useState({});
   const [searchQuery, setSearchQuery] = useState("");
@@ -207,8 +209,6 @@ export const GeneralContextProvider = ({ children }) => {
     //Verifica si hay suficiente stock
     // if (outOfStock(product, action)) return;
 
-    console.log("aaa");
-
     const quantity = product.counter;
     const exists = existingProductInCart(product);
 
@@ -281,6 +281,8 @@ export const GeneralContextProvider = ({ children }) => {
     setSearchQuery,
     sortOption,
     setSortOption,
+    preferenceId,
+    setPreferenceId,
   };
 
   return (

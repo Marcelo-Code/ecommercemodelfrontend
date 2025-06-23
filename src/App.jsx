@@ -29,6 +29,7 @@ import { ProductDetailContainer } from "./components/pages/products/productDetai
 import { NotFoundContainer } from "./components/pages/notFound/NotFoundContainer";
 import { ProtectedCheckOutRoute } from "./routes/ProtectedCheckOutRoute";
 import { FinalizePurchaseContainer } from "./components/pages/purchaseOrders/finalizePurchase/FinalizePurchaseContainer";
+import { DownloadPurchaseOrderContainer } from "./components/pages/purchaseOrders/downloadPurchaseOrder/DownloadPurchaseOrderContainer";
 
 function App() {
   return (
@@ -218,6 +219,10 @@ function App() {
                   <PurchaseOrdersItemsListContainer />
                 </ProtectedUserRoute>
               }
+            />
+            <Route
+              path="/checkout/success"
+              element={<DownloadPurchaseOrderContainer />}
             />
           </Routes>
           <FooterContainer />

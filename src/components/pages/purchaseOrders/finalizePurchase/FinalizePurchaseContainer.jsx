@@ -15,13 +15,13 @@ import "../../../../assets/css/generalStyles.css";
 import { currencyFormat } from "../../../common/currencyFormat/CurrencyFormatContainer";
 import { generalBackGroundColor } from "../../../../utils/helpers";
 import { BackButtonContainer } from "../../../common/backButton/BackButtonContainer";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { GeneralContext } from "../../../../context/GeneralContext";
 
 export const FinalizePurchaseContainer = () => {
   const { preferenceId } = useParams();
 
-  const { handleGoBack } = useContext(GeneralContext);
+  const { handleGoBack, setPreferenceId } = useContext(GeneralContext);
 
   const location = useLocation();
   const { cart, formData } = location.state || {};
@@ -30,6 +30,10 @@ export const FinalizePurchaseContainer = () => {
     (acc, item) => acc + item.price * item.quantity,
     0
   );
+
+  useEffect(() => {
+    setPreferenceId(preferenceId);
+  }, []);
 
   return (
     <Box className="generalContainer">
