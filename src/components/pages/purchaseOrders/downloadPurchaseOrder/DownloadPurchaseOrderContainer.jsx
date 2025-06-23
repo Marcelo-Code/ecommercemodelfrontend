@@ -123,7 +123,7 @@ export const DownloadPurchaseOrderContainer = () => {
                 {purchaseOrder.order.id}
               </Box>
               <Box>
-                <b>Comprobante de pago nro: </b>
+                <b>Operación nro: </b>
                 {paymentId}
               </Box>
             </Box>
@@ -249,6 +249,7 @@ export const DownloadPurchaseOrderContainer = () => {
               maxWidth: "340px",
               border: "1px solid black",
               color: "white",
+              borderRadius: "15px",
               backgroundColor: buttonColor,
               "&:active": {
                 backgroundColor: generalBackGroundColor,
