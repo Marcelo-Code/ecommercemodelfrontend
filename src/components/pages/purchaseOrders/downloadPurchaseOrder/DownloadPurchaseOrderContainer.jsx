@@ -43,7 +43,7 @@ export const DownloadPurchaseOrderContainer = () => {
     html2pdf()
       .set({
         margin: 1,
-        filename: `Nativo_orden_de_compra_${createdPurchaseOrder.order_id}.pdf`,
+        filename: `Nativo_orden_de_compra_${purchaseOrder.id}.pdf`,
         image: { type: "jpeg", quality: 0.98 },
         html2canvas: { scale: 2 },
         jsPDF: { unit: "in", format: "letter", orientation: "portrait" },
@@ -95,7 +95,7 @@ export const DownloadPurchaseOrderContainer = () => {
             <Box>
               <img src="/images/logo2.png" width={60} alt="logo" />
             </Box>
-            <Box>Orden de compra nro: {createdPurchaseOrder.order_id}</Box>
+            <Box>Orden de compra nro: {purchaseOrder.order.id}</Box>
           </Box>
           <Box
             sx={{
@@ -107,20 +107,20 @@ export const DownloadPurchaseOrderContainer = () => {
             }}
           >
             <Typography>
-              <b>Fecha: </b> {dateFormat(createdPurchaseOrder.date)}
+              <b>Fecha: </b> {dateFormat(purchaseOrder.order.date)}
             </Typography>
             <Typography>
-              <b>Comprador: </b> {createdPurchaseOrder.buyer.buyer_name}{" "}
-              {createdPurchaseOrder.buyer.buyer_last_name}
+              <b>Comprador: </b> {purchaseOrder.order.buyer_name}{" "}
+              {purchaseOrder.order.buyer_last_name}
             </Typography>
             <Typography>
-              <b>Teléfono: </b> {createdPurchaseOrder.buyer.buyer_phone_number}
+              <b>Teléfono: </b> {purchaseOrder.order.buyer_phone_number}
             </Typography>
             <Typography>
-              <b>Dirección: </b> {createdPurchaseOrder.buyer.buyer_address}
+              <b>Dirección: </b> {purchaseOrder.order.buyer_address}
             </Typography>
             <Typography>
-              <b>Email: </b> {createdPurchaseOrder.buyer.buyer_email}
+              <b>Email: </b> {purchaseOrder.order.buyer_email}
             </Typography>
           </Box>
 
@@ -158,7 +158,7 @@ export const DownloadPurchaseOrderContainer = () => {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {createdPurchaseOrder.cart.map((item) => (
+                  {purchaseOrder.purchaseItems.map((item) => (
                     <TableRow
                       key={item.id}
                       sx={{
