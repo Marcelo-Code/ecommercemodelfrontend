@@ -55,7 +55,7 @@ export const createPreference = async ({ cart, formData }) => {
 export const getReceipt = async (paymentId) => {
   try {
     const response = await fetch(getReceiptUrl, {
-      method: "POST",
+      method: "GET",
       headers: {
         "Content-Type": "application/json",
       },
@@ -69,7 +69,7 @@ export const getReceipt = async (paymentId) => {
       return {
         success: false,
         code: response.status,
-        message: data.mensaje,
+        message: data.menssage,
         error: data.data,
       };
     }
