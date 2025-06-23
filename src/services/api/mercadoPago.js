@@ -60,9 +60,6 @@ export const getReceipt = async (paymentId) => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({
-        paymentId,
-      }),
     });
     const data = await response.json();
 
@@ -70,10 +67,14 @@ export const getReceipt = async (paymentId) => {
       return {
         success: false,
         code: response.status,
-        message: data.menssage,
+        message: data.message,
         error: data.data,
       };
     }
+    return {
+      success: true,
+      data,
+    };
   } catch (error) {
     return {
       success: false,
