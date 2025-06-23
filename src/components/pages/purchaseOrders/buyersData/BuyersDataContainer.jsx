@@ -96,6 +96,8 @@ export const BuyersDataContainer = () => {
 
         const preferenceId = createPreferenceResponse.data.preference_id;
 
+        console.log(createPreferenceResponse);
+
         navigate(`/purchaseOrders/finalize/${preferenceId}`, {
           state: { cart, formData },
         });
