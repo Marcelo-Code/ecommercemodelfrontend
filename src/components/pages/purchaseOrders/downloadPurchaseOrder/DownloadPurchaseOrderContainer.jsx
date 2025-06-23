@@ -13,7 +13,7 @@ import {
 import "../../../../assets/css/generalStyles.css";
 import { useContext, useEffect, useRef, useState } from "react";
 import { GeneralContext } from "../../../../context/GeneralContext";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { html2pdf } from "html2pdf.js";
 import {
   buttonColor,
@@ -31,7 +31,11 @@ export const DownloadPurchaseOrderContainer = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [purchaseOrder, setPurchaseOrder] = useState(null);
 
-  const { preferenceId } = useParams();
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+
+  const paymentId = queryParams.get("payment_id");
+  const status = queryParams.get("status");
 
   const navigate = useNavigate();
 
@@ -55,11 +59,11 @@ export const DownloadPurchaseOrderContainer = () => {
     handleNavigate();
     clearCart();
   };
-
+  2;
   useEffect(() => {
     setIsLoading(true);
-    console.log(preferenceId);
-    getPurchaseOrderByPaymentId(preferenceId)
+    console.log(paymentId);
+    getPurchaseOrderByPaymentId(paymentId)
       .then((response) => {
         setPurchaseOrder(response.data);
         console.log(response);
