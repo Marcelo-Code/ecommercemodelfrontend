@@ -54,11 +54,15 @@ export const createPreference = async ({ cart, formData }) => {
 
 export const getReceipt = async (paymentId) => {
   try {
-    const response = await fetch(getReceiptUrl, {
+    const url = `${getReceiptUrl}?payment_id=${encodeURIComponent(paymentId)}`;
+    const response = await fetch(url, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
       },
+      body: JSON.stringify({
+        paymentId,
+      }),
     });
     const data = await response.json();
 
