@@ -76,16 +76,15 @@ export default function ProductsPage(productsListProps) {
             {recordsToShow.map((product) => (
               <div
                 key={product.id}
-                // className="bg-white text-black rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 cursor-pointer group"
-                // onClick={() => handleProductClick(product)}
+                className="flex flex-col items-center w-fit mx-auto"
               >
                 <div className="relative">
                   {/* Product Image */}
-                  <div className="relative aspect-[3/4] bg-gray-50 overflow-hidden rounded-lg">
+                  <div className="relative w-[300px] aspect-[1/1] bg-gray-50 overflow-hidden rounded-lg">
                     <img
                       src={product.image || "/placeholder.svg"}
                       alt={product.description}
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-contain mx-auto"
                     />
 
                     <CardActionContainer
