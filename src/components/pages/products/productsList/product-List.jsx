@@ -72,19 +72,19 @@ export default function ProductsPage(productsListProps) {
 
       <PaginationContainer items={filteredProducts} itemsPerPage={10}>
         {(recordsToShow) => (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-12 items-stretch">
             {recordsToShow.map((product) => (
               <div
                 key={product.id}
-                className="flex flex-col items-center w-fit mx-auto"
+                className="flex flex-col justify-between w-full min-w-[300px] h-full"
               >
+                {/* Imagen */}
                 <div className="relative">
-                  {/* Product Image */}
-                  <div className="relative w-[300px] aspect-[1/1] bg-gray-50 overflow-hidden rounded-lg">
+                  <div className="relative aspect-[1/1] bg-gray-50 overflow-hidden rounded-lg w-full">
                     <img
                       src={product.image || "/placeholder.svg"}
                       alt={product.description}
-                      className="w-full h-full object-contain mx-auto"
+                      className="w-full h-full object-contain"
                     />
 
                     <CardActionContainer
@@ -98,57 +98,29 @@ export default function ProductsPage(productsListProps) {
                       setActiveCardId={setActiveCardId}
                     />
 
-                    {/* Best Seller Badge */}
                     {product.bestSeller && (
                       <div className="absolute top-3 right-3 bg-red-600 text-white font-bold px-3 py-1 text-xs rounded-md">
                         BEST SELLER
                       </div>
                     )}
                   </div>
-
-                  {/* Color Options */}
-                  {/* <div className="absolute bottom-3 left-3 flex gap-1">
-                  {product.colors.map((color, index) => (
-                    <div
-                      key={index}
-                      className={`w-6 h-6 rounded-full ${
-                        colorMap[color] || "bg-gray-400"
-                      } shadow-md ring-2 ring-white`}
-                      title={`Color: ${color}`}
-                    />
-                  ))}
-                </div> */}
                 </div>
 
-                <div className="p-4 space-y-3">
-                  {/* Product Name */}
+                {/* Descripción y precio */}
+                <div className="flex flex-col justify-between p-4 space-y-4 w-full h-full">
                   <h3 className="font-semibold text-sm sm:text-base leading-tight min-h-[2.5rem] line-clamp-2">
                     {product.description}
                   </h3>
 
-                  {/* Price */}
                   <div className="space-y-1">
                     <div className="flex justify-center text-xl sm:text-2xl font-bold text-generalBackGroundColor">
                       {formatPrice(product.price)}
                     </div>
 
-                    {/* Installments */}
-                    <div className="text-xs sm:text-sm text-white">
-                      {/* {product.installments.count}  */}
+                    <div className="text-xs sm:text-sm text-white text-center">
                       12 cuotas sin interés
-                      <span className="font-semibold">
-                        {/* {formatPrice(product.installments.amount)} */}
-                      </span>
                     </div>
                   </div>
-
-                  {/* Available Colors Text */}
-                  {/* <div className="text-xs text-gray-500 pt-2 border-t"> */}
-                  {/* {product.colors.length}{" "} */}
-                  {/* {product.colors.length === 1
-                    ? "color disponible"
-                    : "colores disponibles"} */}
-                  {/* </div> */}
                 </div>
               </div>
             ))}
