@@ -72,7 +72,7 @@ export default function ProductsPage(productsListProps) {
 
       <PaginationContainer items={filteredProducts} itemsPerPage={10}>
         {(recordsToShow) => (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-12 items-stretch">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-12 items-stretch">
             {recordsToShow.map((product) => (
               <div
                 key={product.id}

@@ -40,7 +40,7 @@ export const CardActionContainer = ({
               : "opacity-0  pointer-events-none"
           }`}
         >
-          <div className="bg-black w-full p-4 rounded-lg">
+          <div className="bg-black w-full p-4 rounded-[25px]">
             {/* Controles cantidad */}
             <div className="w-full flex justify-between items-center bg-white rounded-full p-1 border border-black mb-3">
               <button
