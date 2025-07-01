@@ -25,11 +25,12 @@ import { CreateEditBrandsContainer } from "./components/pages/brands/createEditB
 import { UsersListContainer } from "./components/pages/users/usersList/UsersListContainer";
 import { CreateEditUserContainer } from "./components/pages/users/createEditUser/CreateEditUserContainer";
 import { SpecialOffersContainer } from "./components/pages/specialOffers/SpecialOffersContainer";
-import { ProductDetailContainer } from "./components/pages/products/productDetail/ProductDetailContainer";
 import { NotFoundContainer } from "./components/pages/notFound/NotFoundContainer";
 import { ProtectedCheckOutRoute } from "./routes/ProtectedCheckOutRoute";
 import { FinalizePurchaseContainer } from "./components/pages/purchaseOrders/finalizePurchase/FinalizePurchaseContainer";
 import { DownloadPurchaseOrderContainer } from "./components/pages/purchaseOrders/downloadPurchaseOrder/DownloadPurchaseOrderContainer";
+import { ProductDetail } from "./components/pages/products/productDetailTailwind/ProductDetail";
+import { ProductDetailEjemplo } from "./components/pages/products/productDetailTailwind/ProductDetailEjemplo";
 
 function App() {
   return (
@@ -46,7 +47,7 @@ function App() {
             {/* Detalle del producto */}
             <Route
               path="/productDetail/:productId"
-              element={<ProductDetailContainer />}
+              element={<ProductDetail />}
             />
             {/* Carrito de compras */}
             <Route path="/cart" element={<CartListContainer />} />
@@ -224,6 +225,7 @@ function App() {
             />
             {/* 404 */}
             <Route path="*" element={<NotFoundContainer />} />
+            <Route path="/ejemplo" element={<ProductDetailEjemplo />} />
           </Routes>
           <FooterContainer />
         </ConfirmProvider>

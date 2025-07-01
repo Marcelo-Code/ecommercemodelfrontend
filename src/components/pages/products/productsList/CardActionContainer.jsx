@@ -6,6 +6,7 @@ import {
 import "./productsList.css";
 import { Icons } from "../../../../assets/Icons";
 import { Box, Button, IconButton } from "@mui/material";
+import { Link } from "react-router-dom";
 
 export const CardActionContainer = (cardActionsProps) => {
   const {
@@ -112,26 +113,28 @@ export const CardActionContainer = (cardActionsProps) => {
             Agregar
           </Button>
 
-          <Button
-            variant="outlined"
-            size="small"
-            sx={{
-              borderRadius: "20px",
-              height: "38px",
-              width: "100%",
-              mt: 1,
-              color: "black",
-              border: "1px solid black",
-              backgroundColor: "white",
-              "&:active": {
-                backgroundColor: hoverButtonColor,
-                color: "white",
-                border: `1px solid ${hoverButtonColor}`,
-              },
-            }}
-          >
-            Detalles
-          </Button>
+          <Link to={`/productDetail/${product.id}`}>
+            <Button
+              variant="outlined"
+              size="small"
+              sx={{
+                borderRadius: "20px",
+                height: "38px",
+                width: "100%",
+                mt: 1,
+                color: "black",
+                border: "1px solid black",
+                backgroundColor: "white",
+                "&:active": {
+                  backgroundColor: hoverButtonColor,
+                  color: "white",
+                  border: `1px solid ${hoverButtonColor}`,
+                },
+              }}
+            >
+              Detalles
+            </Button>
+          </Link>
         </Box>
       </Box>
     </Box>

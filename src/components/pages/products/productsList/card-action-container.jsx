@@ -1,6 +1,7 @@
-import { ShoppingBag, ShoppingCart } from "lucide-react";
+import { Link, ShoppingBag, ShoppingCart } from "lucide-react";
 import { Icons } from "../../../../assets/Icons";
 import { buttonColor, generalBackGroundColor } from "../../../../utils/helpers";
+import { Button } from "@mui/material";
 
 export const CardActionContainer = ({
   product,
@@ -98,25 +99,15 @@ export const CardActionContainer = ({
               }}
               className="w-full hover:bg-blue-700 active:bg-blue-800 text-white font-semibold rounded-full py-2 mb-2 flex items-center justify-center gap-2"
             >
-              {/* <svg
-              className="w-5 h-5"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              viewBox="0 0 24 24"
-            >
-              <path d="M3 3h2l.4 2M7 13h10l4-8H5.4" />
-              <circle cx="7" cy="21" r="1" />
-              <circle cx="17" cy="21" r="1" />
-            </svg> */}
-              {/* <ShoppingCart className="w-5 h-5" /> */}
               Agregar a carrito
             </button>
 
             {/* Botón detalles */}
-            <button className="w-full border border-black bg-white text-black font-semibold rounded-full py-2 hover:bg-gray-200 active:bg-gray-300 transition">
-              Detalles
-            </button>
+            <a href={`/productDetail/${product.id}`}>
+              <button className="w-full border border-black bg-white text-black font-semibold rounded-full py-2 hover:bg-gray-200 active:bg-gray-300 transition">
+                Detalles
+              </button>
+            </a>
           </div>
         </div>
       </div>

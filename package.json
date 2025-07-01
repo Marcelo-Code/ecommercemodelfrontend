@@ -12,6 +12,7 @@
   "dependencies": {
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
+    "@heroicons/react": "^2.2.0",
     "@mercadopago/sdk-react": "^1.0.3",
     "@mui/icons-material": "^7.0.2",
     "@mui/material": "^7.0.2",
@@ -20,6 +21,8 @@
     "@tensorflow-models/body-pix": "^2.2.1",
     "@tensorflow/tfjs": "^4.22.0",
     "browser-image-compression": "^2.0.2",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
     "html2pdf.js": "^0.10.3",
     "lucide-react": "^0.511.0",
     "mui": "^0.0.1",
@@ -31,6 +34,7 @@
     "recharts": "^2.15.3",
     "slick-carousel": "^1.8.1",
     "sweetalert2": "^11.19.1",
+    "tailwind-variants": "^1.0.0",
     "toastify-js": "^1.12.0"
   },
   "devDependencies": {
