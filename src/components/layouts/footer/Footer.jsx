@@ -53,6 +53,15 @@ export const Footer = (footerProps) => {
           <IconButton>
             <Icons.InstagramIcon sx={{ color: "black", fontSize: "1.5em" }} />
           </IconButton>
+          <IconButton>
+            <Icons.FacebookIcon sx={{ color: "black", fontSize: "1.5em" }} />
+          </IconButton>
+          <IconButton>
+            <Icons.XIcon sx={{ color: "black", fontSize: "1.5em" }} />
+          </IconButton>
+          <IconButton>
+            <Icons.YouTubeIcon sx={{ color: "black", fontSize: "1.5em" }} />
+          </IconButton>
         </a>
       </Box>
     </Box>

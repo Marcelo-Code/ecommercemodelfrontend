@@ -29,7 +29,7 @@ import { NotFoundContainer } from "./components/pages/notFound/NotFoundContainer
 import { ProtectedCheckOutRoute } from "./routes/ProtectedCheckOutRoute";
 import { FinalizePurchaseContainer } from "./components/pages/purchaseOrders/finalizePurchase/FinalizePurchaseContainer";
 import { DownloadPurchaseOrderContainer } from "./components/pages/purchaseOrders/downloadPurchaseOrder/DownloadPurchaseOrderContainer";
-import { ProductDetail } from "./components/pages/products/productDetailTailwind/ProductDetail";
+import { ProductDetailContainer } from "./components/pages/products/productDetailTailwind/ProductDetailContainer";
 import { ProductDetailEjemplo } from "./components/pages/products/productDetailTailwind/ProductDetailEjemplo";
 
 function App() {
@@ -47,7 +47,7 @@ function App() {
             {/* Detalle del producto */}
             <Route
               path="/productDetail/:productId"
-              element={<ProductDetail />}
+              element={<ProductDetailContainer />}
             />
             {/* Carrito de compras */}
             <Route path="/cart" element={<CartListContainer />} />

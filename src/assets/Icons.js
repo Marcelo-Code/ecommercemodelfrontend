@@ -60,6 +60,8 @@ import SettingsIcon from "@mui/icons-material/Settings";
 import LocalOfferIcon from "@mui/icons-material/LocalOffer";
 import DoNotDisturbIcon from "@mui/icons-material/DoNotDisturb";
 import LocalMallIcon from "@mui/icons-material/LocalMall";
+import XIcon from "@mui/icons-material/X";
+import YouTubeIcon from "@mui/icons-material/YouTube";
 
 export const Icons = {
   PersonAddIcon,
@@ -124,4 +126,6 @@ export const Icons = {
   LocalOfferIcon,
   DoNotDisturbIcon,
   LocalMallIcon,
+  XIcon,
+  YouTubeIcon,
 };

@@ -38,11 +38,12 @@ export const OptionSelect = ({
           error={error}
           helperText={helperText}
           sx={{
-            backgroundColor: "white",
             "& .MuiOutlinedInput-root": {
               height: "40px",
+              borderRadius: "20px", // bordes redondeados
+              backgroundColor: "white",
               "& fieldset": {
-                borderColor: "gray", // borde normal
+                borderColor: "black", // borde normal
               },
               "&:hover fieldset": {
                 borderColor: "black", // al pasar mouse
