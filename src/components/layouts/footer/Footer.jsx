@@ -20,7 +20,7 @@ export const Footer = (footerProps) => {
           borderRadius: "50%",
           display: "flex",
           justifyContent: "center",
-          alignItems: "center",
+          alignItems: "end",
           zIndex: 2,
         }}
       >
@@ -33,9 +33,7 @@ export const Footer = (footerProps) => {
               target="_blank"
               rel="noopener noreferrer"
             >
-              <Icons.WhatsAppIcon
-                sx={{ color: "white", fontSize: "1.5em", marginTop: "5px" }}
-              />
+              <Icons.WhatsAppIcon sx={{ color: "white", fontSize: "1.5em" }} />
             </a>
           </IconButton>
         )}
