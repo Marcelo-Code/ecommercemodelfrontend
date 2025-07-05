@@ -31,7 +31,7 @@ import { FinalizePurchaseContainer } from "./components/pages/purchaseOrders/fin
 import { DownloadPurchaseOrderContainer } from "./components/pages/purchaseOrders/downloadPurchaseOrder/DownloadPurchaseOrderContainer";
 import { ProductDetailContainer } from "./components/pages/products/productDetailTailwind/ProductDetailContainer";
 import { ProductDetailEjemplo } from "./components/pages/products/productDetailTailwind/ProductDetailEjemplo";
-import { ColorsListContainer } from "./components/pages/productFeatures/colors/colorsList/colorListContainer";
+import { ColorsListContainer } from "./components/pages/productFeatures/colors/colorsList/ColorListContainer";
 import { CreateEditColorsContainer } from "./components/pages/productFeatures/colors/createEditColors/CreateEditColorsContainer";
 
 function App() {
