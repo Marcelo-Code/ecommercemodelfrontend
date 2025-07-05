@@ -1,6 +1,51 @@
 import { errorToastifyAlert, successToastifyAlert } from "../../utils/alerts";
 import { supabaseClient } from "../config/config";
 
+// export const getProductsWithVariants = async () => {
+//   try {
+//     const { data, error, status, statusText, ...rest } = await supabase.from(
+//       "products"
+//     ).select(`
+//         id,
+//         nombre,
+//         descripcion,
+//         imagen_principal,
+//         products_variants (
+//           id,
+//           color,
+//           talle,
+//           sku,
+//           precio,
+//           stock
+//         )
+//       `);
+
+//     if (error) {
+//       return {
+//         data: null,
+//         error: {
+//           code: error.code || null,
+//           status: status || null,
+//           message: error.message || statusText || "Error desconocido",
+//           error,
+//         },
+//       };
+//     }
+
+//     return { data, error: null };
+//   } catch (err) {
+//     return {
+//       data: null,
+//       error: {
+//         code: err.code || null,
+//         status: null,
+//         message: err.message || "Error inesperado",
+//         error: err,
+//       },
+//     };
+//   }
+// };
+
 export const getProducts = async () => {
   try {
     const { data, error } = await supabaseClient

@@ -5,6 +5,7 @@ import { BackButtonContainer } from "../../../common/backButton/BackButtonContai
 import { currencyFormat } from "../../../common/currencyFormat/CurrencyFormatContainer";
 import "../../../../assets/css/generalStyles.css";
 import { OptionSelect } from "../../../common/optionSelect/OptionSelect";
+import { Chip } from "@mui/material";
 
 const PRODUCT_COLORS = [
   { id: 1, name: "White", bgColor: "bg-white" },
@@ -116,14 +117,11 @@ export const ProductDetail = (productDetailProps) => {
   const [thumbnailStartIndex, setThumbnailStartIndex] = useState(0);
   const [data, setData] = useState({});
 
-  // console.log(product);
-
-  const PRODUCT_IMAGES = [
-    {
-      src: product.image,
-      alt: "Two each of gray, white, and black shirts laying flat.",
-    },
-  ];
+  const PRODUCT_IMAGES = [1, 2, 3, 4, 5]
+    .map((i) =>
+      product[`image${i}`] ? { src: product[`image${i}`], alt: "" } : null
+    )
+    .filter(Boolean);
 
   const PRODUCT_IMAGES1 = [
     {
@@ -168,8 +166,6 @@ export const ProductDetail = (productDetailProps) => {
       (prev) => (prev - 1 + PRODUCT_IMAGES.length) % PRODUCT_IMAGES.length
     );
   };
-
-  console.log(product);
 
   return (
     <div
@@ -273,7 +269,6 @@ export const ProductDetail = (productDetailProps) => {
                 src={PRODUCT_IMAGES[selectedImage].src || "/placeholder.svg"}
                 alt={PRODUCT_IMAGES[selectedImage].alt}
                 className="object-contain rounded-lg"
-                priority
               />
 
               {/* Navigation arrows */}
@@ -457,6 +452,23 @@ export const ProductDetail = (productDetailProps) => {
                 </ul>
               </div>
             </div>
+
+            {/* Categorias */}
+            {product.categoriesArray.length > 0 && (
+              <div className="mt-4">
+                {product.categoriesArray.map((category) => (
+                  <Chip
+                    key={category.category_id}
+                    label={category.name}
+                    size="small"
+                    sx={{
+                      margin: "2px",
+                      backgroundColor: generalBackGroundColor,
+                    }}
+                  />
+                ))}
+              </div>
+            )}
           </div>
         </div>
       </div>

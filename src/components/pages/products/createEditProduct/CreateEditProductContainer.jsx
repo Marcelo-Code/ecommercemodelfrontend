@@ -27,6 +27,8 @@ export const CreateEditProductContainer = () => {
   const [modifiedFlag, setModifiedFlag] = useState(false);
   const [isLoadingButton, setIsLoadingButton] = useState(false);
   const [isLoadingImage, setIsLoadingImage] = useState(false);
+  const [activeImageIndex, setActiveImageIndex] = useState(null);
+
   const [isLoading, setIsLoading] = useState(true);
   const [brands, setBrands] = useState([]);
   const [categories, setCategories] = useState([]);
@@ -102,7 +104,7 @@ export const CreateEditProductContainer = () => {
 
     if (!isConfirmed) return;
 
-    setIsLoadingImage(true);
+    setIsLoadingImage(activeImageIndex);
     // Llama a la función para eliminar el archivo
     delete formData.brands;
     deleteImage(documentName, formData)
@@ -113,7 +115,7 @@ export const CreateEditProductContainer = () => {
         setFormData(response.data);
       })
       .catch((error) => console.log(error))
-      .finally(() => setIsLoadingImage(false));
+      .finally(() => setIsLoadingImage(null));
   };
 
   // Función para manejar la carga de archivos
@@ -133,7 +135,7 @@ export const CreateEditProductContainer = () => {
           useWebWorker: true,
         };
 
-        setIsLoadingImage(true);
+        setIsLoadingImage(activeImageIndex);
 
         // Comprime la imagen
         const compressedFile = await imageCompression(file, options);
@@ -152,7 +154,7 @@ export const CreateEditProductContainer = () => {
       } catch (error) {
         console.error("Error al procesar la imagen:", error);
       } finally {
-        setIsLoadingImage(false);
+        setIsLoadingImage(null);
       }
     }
   };
@@ -304,6 +306,7 @@ export const CreateEditProductContainer = () => {
     productId,
     PRODUCT_STATUS,
     categoryArrayError,
+    setActiveImageIndex,
   };
 
   return <CreateEditProduct {...createEditProductProps} />;

@@ -82,7 +82,7 @@ export default function ProductsPage(productsListProps) {
                 <div className="relative">
                   <div className="relative aspect-[1/1] bg-gray-50 overflow-hidden rounded-lg w-full">
                     <img
-                      src={product.image || "/placeholder.svg"}
+                      src={product.image1 || "/placeholder.svg"}
                       alt={product.description}
                       className="w-full h-full object-contain"
                     />

@@ -42,6 +42,7 @@ export const CreateEditProduct = (createEditProductProps) => {
     productId,
     PRODUCT_STATUS,
     categoryArrayError,
+    setActiveImageIndex,
   } = createEditProductProps;
 
   const formButtonGroupContainerProps = {
@@ -58,7 +59,7 @@ export const CreateEditProduct = (createEditProductProps) => {
     width: "90%",
   };
 
-  const [openImageDialog, setOpenImageDialog] = useState(false);
+  const [openImageDialog, setOpenImageDialog] = useState(null);
 
   return (
     <Box className="generalContainer">
@@ -123,7 +124,7 @@ export const CreateEditProduct = (createEditProductProps) => {
                     variant="outlined"
                     name="special_offer"
                     onChange={handleChange}
-                    value={formData.special_offer}
+                    value={formData.special_offer || ""}
                     fullWidth
                     InputProps={{
                       sx: {
@@ -342,47 +343,102 @@ export const CreateEditProduct = (createEditProductProps) => {
               mx: "auto",
               display: "flex",
               justifyContent: "center",
-              flexDirection: "column",
               alignItems: "center",
+              flexWrap: "wrap",
+              gap: "20px",
             }}
           >
-            <Box
-              sx={{
-                width: "300px",
-                height: "300px",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                border: `3px solid ${generalBackGroundColor}`,
-                borderRadius: "5px",
-                backgroundColor: "rgba(0,0,0,0.1)",
-              }}
-            >
-              {isLoadingImage && (
-                <CircularProgress sx={{ color: generalBackGroundColor }} />
-              )}
-              {!formData.image && !isLoadingImage && (
-                <Box sx={{ fontSize: "20px" }}>Sin imagen</Box>
-              )}
-              {formData.image && !isLoadingImage && (
-                // Muestra la imagen actualizada, siempre llamando a una URL distinta
-                // para evitar que se cargue la almacenada en el caché del navegador
-                <img
-                  src={`${formData?.image}?t=${Date.now()}`}
-                  alt="Producto"
-                  style={{
-                    width: "100%",
-                    height: "100%",
-                    objectFit: "contain",
-                    cursor: "pointer",
+            {[1, 2, 3, 4, 5].map((i) => (
+              <Box key={i}>
+                {/* Contenedor de la imagen actualizada */}
+                <Box
+                  sx={{
+                    width: "150px",
+                    height: "150px",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    border: `3px solid ${generalBackGroundColor}`,
+                    borderRadius: "5px",
+                    backgroundColor: "rgba(0,0,0,0.1)",
                   }}
-                  onClick={() => setOpenImageDialog(true)}
+                >
+                  {isLoadingImage === i && (
+                    <CircularProgress sx={{ color: generalBackGroundColor }} />
+                  )}
+                  {!formData[`image${i}`] && isLoadingImage !== i && (
+                    <Box sx={{ fontSize: "20px" }}>Sin imagen</Box>
+                  )}
+                  {formData[`image${i}`] && isLoadingImage !== i && (
+                    // Muestra la imagen actualizada, siempre llamando a una URL distinta
+                    // para evitar que se cargue la almacenada en el caché del navegador
+                    <img
+                      src={`${
+                        formData ? formData[`image${i}`] : formData[`image${i}`]
+                      }?t=${Date.now()}`}
+                      alt="Producto"
+                      style={{
+                        width: "100%",
+                        height: "100%",
+                        objectFit: "contain",
+                        cursor: "pointer",
+                      }}
+                      onClick={() => setOpenImageDialog(i)}
+                    />
+                  )}
+                </Box>
+
+                {/* Botones para eliminar y subir imagen */}
+                <Box
+                  sx={{
+                    width: "100%",
+                    display: "flex",
+                    justifyContent: "center",
+                    gap: "10px",
+                  }}
+                >
+                  <Tooltip title="Eliminar imagen" placement="top-end" arrow>
+                    <IconButton
+                      onClick={() => {
+                        handleDeleteImage(`image${i}`);
+                        setActiveImageIndex(i);
+                      }}
+                    >
+                      <Icons.DeleteIcon
+                        sx={{ fontSize: "30px", color: deleteColor }}
+                      />
+                    </IconButton>
+                  </Tooltip>
+                  <Tooltip title="Subir imagen" placement="top-end" arrow>
+                    <IconButton
+                      onClick={() => {
+                        handleUploadImage(`image${i}`);
+                        setActiveImageIndex(i);
+                      }}
+                    >
+                      <Icons.UploadIcon
+                        sx={{ fontSize: "30px", color: "gray" }}
+                      />
+                    </IconButton>
+                  </Tooltip>
+                </Box>
+
+                {/* Abre el selector de archivos */}
+                <input
+                  type="file"
+                  ref={fileInputRef}
+                  style={{ display: "none" }}
+                  onChange={(event) => handleFileChange(event)}
+                  //Se reseta el input a null para forzar el cambio y poder disparar el evento onChange
+                  //de manera tal pueda permitir subir el mismo archivo nuevamente en caso de que sea necesario
+                  onClick={(e) => (e.target.value = null)}
                 />
-              )}
-            </Box>
+              </Box>
+            ))}
+            {/* Dialog para ver la imagen ampliada */}
             <Dialog
-              open={openImageDialog}
-              onClose={() => setOpenImageDialog(false)}
+              open={openImageDialog !== null}
+              onClose={() => setOpenImageDialog(null)}
               maxWidth="md"
               fullWidth
               sx={{ maxHeight: "90vh" }}
@@ -395,7 +451,7 @@ export const CreateEditProduct = (createEditProductProps) => {
                 }}
               >
                 <IconButton
-                  onClick={() => setOpenImageDialog(false)}
+                  onClick={() => setOpenImageDialog(null)}
                   sx={{
                     position: "absolute",
                     top: 8,
@@ -406,7 +462,7 @@ export const CreateEditProduct = (createEditProductProps) => {
                   <CloseIcon />
                 </IconButton>
                 <img
-                  src={`${formData.image}?t=${Date.now()}`}
+                  src={`${formData[`image${openImageDialog}`]}?t=${Date.now()}`}
                   alt="Producto ampliado"
                   style={{
                     width: "100%",
@@ -416,43 +472,8 @@ export const CreateEditProduct = (createEditProductProps) => {
                 />
               </DialogContent>
             </Dialog>
-
-            <Box
-              sx={{
-                width: "100%",
-                display: "flex",
-                justifyContent: "center",
-                gap: "10px",
-              }}
-            >
-              {/* Llama a la función de carga de archivos */}
-              <Tooltip title="Eliminar imagen" placement="top-end" arrow>
-                <IconButton onClick={() => handleDeleteImage("image")}>
-                  <Icons.DeleteIcon
-                    sx={{ fontSize: "30px", color: deleteColor }}
-                  />
-                </IconButton>
-              </Tooltip>
-              <Tooltip title="Subir imagen" placement="top-end" arrow>
-                <IconButton onClick={() => handleUploadImage("image")}>
-                  <Icons.UploadIcon sx={{ fontSize: "30px", color: "gray" }} />
-                </IconButton>
-              </Tooltip>
-            </Box>
-
-            {/* Abre el selector de archivos */}
-            <input
-              type="file"
-              ref={fileInputRef}
-              style={{ display: "none" }}
-              onChange={handleFileChange}
-              //Se reseta el input a null para forzar el cambio y poder disparar el evento onChange
-              //de manera tal pueda permitir subir el mismo archivo nuevamente en caso de que sea necesario
-              onClick={(e) => (e.target.value = null)}
-            />
-
-            <BackButtonContainer />
           </Box>
+          <BackButtonContainer />
         </>
       )}
     </Box>

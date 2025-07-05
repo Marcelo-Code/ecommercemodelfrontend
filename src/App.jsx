@@ -31,6 +31,8 @@ import { FinalizePurchaseContainer } from "./components/pages/purchaseOrders/fin
 import { DownloadPurchaseOrderContainer } from "./components/pages/purchaseOrders/downloadPurchaseOrder/DownloadPurchaseOrderContainer";
 import { ProductDetailContainer } from "./components/pages/products/productDetailTailwind/ProductDetailContainer";
 import { ProductDetailEjemplo } from "./components/pages/products/productDetailTailwind/ProductDetailEjemplo";
+import { ColorsListContainer } from "./components/pages/productFeatures/colors/colorsList/colorListContainer";
+import { CreateEditColorsContainer } from "./components/pages/productFeatures/colors/createEditColors/CreateEditColorsContainer";
 
 function App() {
   return (
@@ -146,6 +148,33 @@ function App() {
               element={
                 <ProtectedUserRoute>
                   <CreateEditBrandsContainer />
+                </ProtectedUserRoute>
+              }
+            />
+            {/* Lista de colores */}
+            <Route
+              path="/colors"
+              element={
+                <ProtectedUserRoute>
+                  <ColorsListContainer />
+                </ProtectedUserRoute>
+              }
+            />
+            {/* Editar colores */}
+            <Route
+              path="/updateColors/updateColor/:colorId"
+              element={
+                <ProtectedUserRoute>
+                  <CreateEditColorsContainer />
+                </ProtectedUserRoute>
+              }
+            />
+            {/* Crear color */}
+            <Route
+              path="/updateColors/createColor"
+              element={
+                <ProtectedUserRoute>
+                  <CreateEditColorsContainer />
                 </ProtectedUserRoute>
               }
             />

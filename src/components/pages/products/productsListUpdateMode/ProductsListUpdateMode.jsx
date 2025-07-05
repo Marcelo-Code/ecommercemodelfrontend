@@ -127,8 +127,8 @@ export const ProductsListUpdateMode = ({
                       >
                         <img
                           src={
-                            product.image
-                              ? `${product.image}?t=${Date.now()}`
+                            product.image1
+                              ? `${product.image1}?t=${Date.now()}`
                               : "/images/logo2.png"
                           }
                           alt={product.description || "Producto"}

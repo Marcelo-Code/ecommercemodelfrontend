@@ -150,7 +150,7 @@ export const SpecialOffers = (specialOffersProps) => {
                     <Box>
                       <Box
                         component="img"
-                        src={product.image}
+                        src={product.image1}
                         alt="producto"
                         sx={{
                           width: "170px",
