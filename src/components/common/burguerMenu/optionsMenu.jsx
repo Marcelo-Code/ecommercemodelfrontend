@@ -26,6 +26,11 @@ export const adminOptions = [
     option: "Colores",
     link: `/colors`,
   },
+  {
+    icon: <Icons.EditIcon />,
+    option: "Talles",
+    link: `/sizes`,
+  },
   // {
   //   icon: <Icons.LocalOfferIcon />,
   //   option: "Ofertas",

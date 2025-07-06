@@ -5,19 +5,17 @@ import {
   generalBackGroundColor,
 } from "../../../../../utils/helpers";
 import { Icons } from "../../../../../assets/Icons";
-import BasicColorPicker from "./ColorPicker";
 
-export const CreateEditColors = (createEditBrandProps) => {
+export const CreateEditSizes = (createEditSizesProps) => {
   const {
     handleGoBack,
     modifiedFlag,
     isLoadingButton,
     formData,
     handleChange,
-    handleColorChange,
     handleSubmit,
-    colorId,
-  } = createEditBrandProps;
+    sizeId,
+  } = createEditSizesProps;
 
   const formButtonGroupContainerProps = {
     handleGoBack,
@@ -36,7 +34,7 @@ export const CreateEditColors = (createEditBrandProps) => {
   return (
     <Box className="generalContainer">
       <Box className="generalTitle">
-        {colorId ? "Editar color" : "Crear nuevo color"}
+        {sizeId ? "Editar talle" : "Crear nuevo talle"}
       </Box>
       <form onSubmit={handleSubmit}>
         <FormGroup>
@@ -54,11 +52,7 @@ export const CreateEditColors = (createEditBrandProps) => {
             }}
           >
             <Box sx={elementStyle}>
-              {/* <Icons.DescriptionIcon /> */}
-              <BasicColorPicker
-                handleColorChange={handleColorChange}
-                formData={formData}
-              />
+              <Icons.DescriptionIcon />
               <TextField
                 id="outlined-basic"
                 label="Nombre"
@@ -67,8 +61,7 @@ export const CreateEditColors = (createEditBrandProps) => {
                 onChange={handleChange}
                 required
                 value={formData.name}
-                // fullWidth
-                sx={{ width: "80%" }}
+                fullWidth
                 InputProps={{
                   sx: {
                     alignItems: "center",

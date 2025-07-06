@@ -33,6 +33,8 @@ import { ProductDetailContainer } from "./components/pages/products/productDetai
 import { ProductDetailEjemplo } from "./components/pages/products/productDetailTailwind/ProductDetailEjemplo";
 import { ColorsListContainer } from "./components/pages/productFeatures/colors/colorsList/ColorListContainer";
 import { CreateEditColorsContainer } from "./components/pages/productFeatures/colors/createEditColors/CreateEditColorsContainer";
+import { SizesListContainer } from "./components/pages/productFeatures/sizes/sizesList/SizesListContainer";
+import { CreateEditSizesContainer } from "./components/pages/productFeatures/sizes/createEditSizes/CreateEditSizesContainer";
 
 function App() {
   return (
@@ -175,6 +177,33 @@ function App() {
               element={
                 <ProtectedUserRoute>
                   <CreateEditColorsContainer />
+                </ProtectedUserRoute>
+              }
+            />
+            {/* Lista de talles */}
+            <Route
+              path="/sizes"
+              element={
+                <ProtectedUserRoute>
+                  <SizesListContainer />
+                </ProtectedUserRoute>
+              }
+            />
+            {/* Editar talles */}
+            <Route
+              path="/updateSizes/updateSize/:sizeId"
+              element={
+                <ProtectedUserRoute>
+                  <CreateEditSizesContainer />
+                </ProtectedUserRoute>
+              }
+            />
+            {/* Crear talle */}
+            <Route
+              path="/updateSizes/createSize"
+              element={
+                <ProtectedUserRoute>
+                  <CreateEditSizesContainer />
                 </ProtectedUserRoute>
               }
             />

@@ -45,9 +45,9 @@ export const sanitizeFileName = (name) => {
 export const sanitizeName = (name) => {
   return name
     .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .replace(/[^\w.-]/g, " ")
-    .replace(/\s+/g, " ")
+    .replace(/[\u0300-\u036f]/g, "") // elimina tildes
+    .replace(/[^a-zA-Z0-9ñÑçÇ.\- ]+/g, "") // permite letras comunes + ñ + ç + números + punto + guión + espacio
+    .replace(/\s+/g, " ") // colapsa múltiples espacios
     .trim()
     .toUpperCase();
 };

@@ -1,14 +1,9 @@
 import { ChromePicker } from "react-color";
 import { Popover, Button, Box } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
-export default function ColorPicker() {
+export default function ColorPicker({ handleColorChange, formData }) {
   const [anchorEl, setAnchorEl] = useState(null);
-  const [color, setColor] = useState("#FFFFFF");
-
-  useEffect(() => {
-    console.log(color);
-  }, [color]);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -25,7 +20,7 @@ export default function ColorPicker() {
       <Button
         variant="contained"
         sx={{
-          backgroundColor: color,
+          backgroundColor: formData.code,
           height: 36,
           width: 36,
           minWidth: 0,
@@ -34,9 +29,45 @@ export default function ColorPicker() {
           border: "1px solid black",
         }}
         onClick={handleClick}
-      ></Button>
-      <Popover open={open} anchorEl={anchorEl} onClose={handleClose}>
-        <ChromePicker color={color} onChange={(c) => setColor(c.hex)} />
+      />
+      <Popover
+        open={open}
+        anchorEl={anchorEl}
+        onClose={handleClose}
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "left",
+        }}
+        transformOrigin={{
+          vertical: "top",
+          horizontal: "left",
+        }}
+        PaperProps={{
+          sx: {
+            width: "100%",
+            maxWidth: "600px",
+            minWidth: "300px",
+            p: 2,
+          },
+        }}
+      >
+        <ChromePicker
+          styles={{
+            default: {
+              picker: {
+                width: "100%",
+                fontFamily: "roboto",
+              },
+              alpha: {
+                display: "none",
+              },
+            },
+          }}
+          color={formData.code}
+          onChange={(color) => {
+            handleColorChange(color);
+          }}
+        />
       </Popover>
     </>
   );

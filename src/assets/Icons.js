@@ -62,6 +62,7 @@ import DoNotDisturbIcon from "@mui/icons-material/DoNotDisturb";
 import LocalMallIcon from "@mui/icons-material/LocalMall";
 import XIcon from "@mui/icons-material/X";
 import YouTubeIcon from "@mui/icons-material/YouTube";
+import CircleIcon from "@mui/icons-material/Circle";
 
 export const Icons = {
   PersonAddIcon,
@@ -128,4 +129,5 @@ export const Icons = {
   LocalMallIcon,
   XIcon,
   YouTubeIcon,
+  CircleIcon,
 };

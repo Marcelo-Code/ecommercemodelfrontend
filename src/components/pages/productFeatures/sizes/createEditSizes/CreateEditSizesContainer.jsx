@@ -10,37 +10,29 @@ import {
 } from "../../../../../utils/alerts";
 import { handleError, sanitizeName } from "../../../../../utils/helpers";
 import { GeneralContext } from "../../../../../context/GeneralContext";
-import { CreateEditColors } from "./CreateEditColors";
+import { CreateEditSizes } from "./CreateEditSizes";
 import {
-  createColor,
-  getColor,
-  getColors,
-  updateColor,
-} from "../../../../../services/api/colors";
+  createSize,
+  getSize,
+  getSizes,
+  updateSize,
+} from "../../../../../services/api/sizes";
 
-export const CreateEditColorsContainer = () => {
+export const CreateEditSizesContainer = () => {
   const [formData, setFormData] = useState({});
-  const [colors, setColors] = useState([]);
+  const [sizes, setSizes] = useState([]);
   const [modifiedFlag, setModifiedFlag] = useState(false);
   const [isLoadingButton, setIsLoadingButton] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const formDataInitialState = {
     name: "",
-    code: "#ffffff",
   };
 
   const { handleGoBack } = useContext(GeneralContext);
 
-  //Obtiene el id del producto para su edición
-  const { colorId } = useParams();
-
-  const handleColorChange = (colorResult) => {
-    const hex = colorResult.hex;
-    setFormData({ ...formData, code: hex });
-
-    if (!modifiedFlag) setModifiedFlag(true);
-  };
+  //Obtiene el id para su edición
+  const { sizeId } = useParams();
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -56,14 +48,14 @@ export const CreateEditColorsContainer = () => {
 
     const updatedFormData = { ...formData, name: sanitizeName(formData.name) };
 
-    const exist = colors.some((color) => color.name === updatedFormData.name);
+    const exist = sizes.some((size) => size.name === updatedFormData.name);
 
-    if (exist && !colorId) {
-      errorToastifyAlert("Ya existe un color con ese nombre");
+    if (exist && !sizeId) {
+      errorToastifyAlert("Ya existe un talle con ese nombre");
       return;
     }
 
-    const request = colorId ? updateColor : createColor;
+    const request = sizeId ? updateSize : createSize;
 
     setIsLoadingButton(true);
 
@@ -73,7 +65,7 @@ export const CreateEditColorsContainer = () => {
       if (response.status !== 200 && response.status !== 201)
         handleError(response);
 
-      const action = colorId ? "actualizado" : "creado";
+      const action = sizeId ? "actualizado" : "creado";
       successToastifyAlert(`Color ${action} con éxito`);
 
       handleGoBack();
@@ -90,23 +82,23 @@ export const CreateEditColorsContainer = () => {
   useEffect(() => {
     setIsLoading(true);
     Promise.all([
-      colorId ? getColor(colorId) : Promise.resolve({ data: [null] }),
-      getColors(),
+      sizeId ? getSize(sizeId) : Promise.resolve({ data: [null] }),
+      getSizes(),
     ])
-      .then(([colorResponse, colorsResponse]) => {
+      .then(([sizeResponse, sizesResponse]) => {
         //Validaciones de marcas
-        if (colorsResponse.status !== 200) {
-          handleError(colorsResponse);
+        if (sizesResponse.status !== 200) {
+          handleError(sizesResponse);
         }
-        if (colorResponse.status !== 200 && colorId) {
-          handleError(colorResponse);
+        if (sizeResponse.status !== 200 && sizeId) {
+          handleError(sizeResponse);
         }
-        if (colorId) {
-          setFormData(colorResponse.data);
+        if (sizeId) {
+          setFormData(sizeResponse.data);
         } else {
           setFormData(formDataInitialState);
         }
-        setColors(colorsResponse.data);
+        setSizes(sizesResponse.data);
       })
       .catch((error) => {
         console.error("Error en la carga de datos:", error);
@@ -115,20 +107,19 @@ export const CreateEditColorsContainer = () => {
       .finally(() => {
         setIsLoading(false);
       });
-  }, [colorId]);
+  }, [sizeId]);
 
   if (error) return <ErrorContainer error={error} />;
   if (isLoading) return <LoadingContainer />;
 
-  const createEditColorsProps = {
+  const createEditSizesProps = {
     handleGoBack,
     modifiedFlag,
     isLoadingButton,
     formData,
     handleChange,
-    handleColorChange,
     handleSubmit,
-    colorId,
+    sizeId,
   };
-  return <CreateEditColors {...createEditColorsProps} />;
+  return <CreateEditSizes {...createEditSizesProps} />;
 };
