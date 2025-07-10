@@ -8,28 +8,13 @@ export const adminOptions = [
   },
   {
     icon: <Icons.EditIcon />,
-    option: "Categorias",
-    link: `/categories`,
+    option: "Caract. productos",
+    link: `/brands`,
   },
   {
     icon: <Icons.EditIcon />,
     option: "Edición productos",
     link: `/updateProducts`,
-  },
-  {
-    icon: <Icons.EditIcon />,
-    option: "Marcas",
-    link: `/brands`,
-  },
-  {
-    icon: <Icons.EditIcon />,
-    option: "Colores",
-    link: `/colors`,
-  },
-  {
-    icon: <Icons.EditIcon />,
-    option: "Talles",
-    link: `/sizes`,
   },
   // {
   //   icon: <Icons.LocalOfferIcon />,

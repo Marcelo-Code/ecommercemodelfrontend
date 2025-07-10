@@ -22,6 +22,7 @@ import { currencyFormat } from "../../../common/currencyFormat/CurrencyFormatCon
 
 import { Dialog, DialogContent } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
+import { ProductVariantsListContainer } from "../productsVariants/productsVariantsList/ProductVariantsListContainer";
 
 export const CreateEditProduct = (createEditProductProps) => {
   const {
@@ -30,9 +31,14 @@ export const CreateEditProduct = (createEditProductProps) => {
     isLoadingButton,
     brands,
     categories,
+    colors,
+    sizes,
     handleChange,
+    handleChangeProductVariant,
     formData,
+    formDataProductVariant,
     handleSubmit,
+    handleSubmitProductVariant,
     createdProduct,
     fileInputRef,
     handleFileChange,
@@ -303,7 +309,6 @@ export const CreateEditProduct = (createEditProductProps) => {
                     required
                   />
                 </Box>
-
                 <FormButtonGroupContainer {...formButtonGroupContainerProps} />
               </Box>
             </FormGroup>
@@ -472,8 +477,93 @@ export const CreateEditProduct = (createEditProductProps) => {
                 />
               </DialogContent>
             </Dialog>
+            <BackButtonContainer />
           </Box>
-          <BackButtonContainer />
+
+          <Box className="generalTitle">Variantes</Box>
+          {/* <form onSubmit={handleSubmitProductVariant}>
+            <FormGroup>
+              <Box
+                sx={{
+                  width: "100%",
+                  maxWidth: "800px",
+                  mx: "auto",
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  marginTop: "20px",
+                  marginBottom: "20px",
+                }}
+              >
+                <Box sx={elementStyle}>
+                  <Icons.CircleIcon />
+                  <OptionSelect
+                    getOptionLabel={(option) => `${option.name}`}
+                    name="color_id"
+                    placeholder="Seleccionar color"
+                    clients={colors}
+                    value={formDataProductVariant.color_id}
+                    onChange={handleChangeProductVariant}
+                    label={"Color"}
+                  />
+                </Box>
+                <Box sx={elementStyle}>
+                  <Icons.DescriptionIcon />
+                  <OptionSelect
+                    getOptionLabel={(option) => `${option.name}`}
+                    name="size_id"
+                    placeholder="Seleccionar talle"
+                    clients={sizes}
+                    value={formDataProductVariant.size_id}
+                    onChange={handleChangeProductVariant}
+                    label={"Talle"}
+                  />
+                </Box>
+                <Box sx={elementStyle}>
+                  <Icons.InventoryIcon />
+                  <TextField
+                    type="number"
+                    id="outlined-basic"
+                    label="Stock"
+                    variant="outlined"
+                    name="stock"
+                    onChange={handleChangeProductVariant}
+                    required
+                    value={formDataProductVariant.stock}
+                    fullWidth
+                    InputLabelProps={{
+                      shrink: true, // ← fuerza el label flotante
+                    }}
+                    sx={{
+                      "& label": {
+                        top: "-5px",
+                        color: "gray", // color normal
+                      },
+                      "& label.Mui-focused": {
+                        color: `${buttonColor}`, // color al enfocar
+                      },
+                      "& .MuiOutlinedInput-root": {
+                        height: 43,
+                        alignItems: "center",
+                        "& fieldset": {
+                          borderColor: "gray", // borde normal
+                        },
+                        "&:hover fieldset": {
+                          borderColor: "black", // hover
+                        },
+                        "&.Mui-focused fieldset": {
+                          borderColor: `${generalBackGroundColor}`, // borde al enfocar
+                        },
+                      },
+                    }}
+                  />
+                </Box>
+                <FormButtonGroupContainer {...formButtonGroupContainerProps} />
+              </Box>
+            </FormGroup>
+          </form> */}
+          <ProductVariantsListContainer productId={productId} />
         </>
       )}
     </Box>

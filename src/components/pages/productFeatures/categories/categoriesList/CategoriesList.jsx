@@ -1,11 +1,10 @@
 import { Box, Button } from "@mui/material";
-import "../../../../assets/css/generalStyles.css";
+import "../../../../../assets/css/generalStyles.css";
 import "./categoriesList.css";
-import { Icons } from "../../../../assets/Icons";
-import { BackButtonContainer } from "../../../common/backButton/BackButtonContainer";
-import { generalBackGroundColor } from "../../../../utils/helpers";
-import { GeneralBarContainer } from "../../../layouts/generalBar/GeneralBarContainer";
-import { PaginationContainer } from "../../../common/pagination/PaginationContainer";
+import { BackButtonContainer } from "../../../../common/backButton/BackButtonContainer";
+import { generalBackGroundColor } from "../../../../../utils/helpers";
+import { GeneralBarContainer } from "../../../../layouts/generalBar/GeneralBarContainer";
+import { PaginationContainer } from "../../../../common/pagination/PaginationContainer";
 
 export const CategoriesList = (categoriesListProps) => {
   const { categories, handleUpdateCategory, ...generalBarContainerProps } =

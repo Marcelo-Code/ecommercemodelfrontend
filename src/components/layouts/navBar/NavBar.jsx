@@ -7,28 +7,27 @@ import { Link } from "react-router-dom";
 import { ShoppingBag, ShoppingCart } from "lucide-react";
 
 export const NavBar = (navBarProps) => {
-  const { totalProductsInCart, isLoggedIn, loggedUser, alerts } = navBarProps;
+  const { text, totalProductsInCart, isLoggedIn, loggedUser, alerts } =
+    navBarProps;
   const navBarIcon = {
     fontSize: "30px",
     color: "white",
   };
 
-  const text =
-    " ¡Promoción especial solo por hoy! — ¡20% OFF en toda la tienda! —";
+  // const text =
+  //   " ¡Promoción especial solo por hoy! — ¡20% OFF en toda la tienda! —";
+
+  let finalText = "";
+  while (finalText.length < 400 && text.length > 0) {
+    finalText += ` - ${text}`;
+  }
 
   return (
     <div className="w-full bg-black">
       <div className="h-4"></div>
       <div className="relative w-full overflow-hidden text-white bg-generalBackGroundColor">
         <div className="flex animate-marquee whitespace-nowrap py-1 text-black">
-          <span>{text}</span>
-          <span>{text}</span>
-          <span>{text}</span>
-          <span>{text}</span>
-          <span>{text}</span>
-          <span>{text}</span>
-          <span>{text}</span>
-          <span>{text}</span>
+          <span>{finalText}</span>
         </div>
       </div>
 

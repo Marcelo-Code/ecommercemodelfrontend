@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { CategoriesList } from "./CategoriesList";
-import { getCategories } from "../../../../services/api/categories";
-import { getBrands } from "../../../../services/api/brands";
-import { handleError } from "../../../../utils/helpers";
-import { LoadingContainer } from "../../loading/LoadingContainer";
-import { Icons } from "../../../../assets/Icons";
+import { getCategories } from "../../../../../services/api/categories";
+import { getBrands } from "../../../../../services/api/brands";
+import { handleError } from "../../../../../utils/helpers";
+import { LoadingContainer } from "../../../loading/LoadingContainer";
+import { Icons } from "../../../../../assets/Icons";
 import { useNavigate } from "react-router-dom";
-import { ErrorContainer } from "../../error/ErrorContainer";
+import { ErrorContainer } from "../../../error/ErrorContainer";
 
 export const CategoriesListContainer = () => {
   const [isLoading, setIsLoading] = useState(false);

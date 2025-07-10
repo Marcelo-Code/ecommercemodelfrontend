@@ -108,12 +108,14 @@ export const getActiveProducts = async () => {
   }
 };
 
-export const createProduct = async (product) => {
+export const createProduct = async (product, firstVariant) => {
   try {
+    //1. Crear producto
     const { error } = await supabaseClient.from("products").insert([product]);
 
     if (error) throw error;
 
+    //2. Obtener el producto recientemente creado
     const { data: fetched, error: fetchError } = await supabaseClient
       .from("products")
       .select("*")
@@ -121,6 +123,20 @@ export const createProduct = async (product) => {
       .limit(1);
 
     if (fetchError) throw fetchError;
+
+    const createdProduct = fetched[0];
+
+    //3. Crear la primer variante del producto
+    const variantToInsert = {
+      ...firstVariant,
+      product_id: createdProduct.id,
+    };
+
+    const { error: variantError } = await supabaseClient
+      .from("products_variants")
+      .insert([variantToInsert]);
+
+    if (variantError) throw variantError;
 
     return {
       status: 201,
@@ -138,21 +154,22 @@ export const createProduct = async (product) => {
 
 export const createProductWithCategoriesArray = async (productData) => {
   try {
-    const { categoriesArray, ...productDataToInsert } = productData;
+    const { categoriesArray, firstVariant, ...productDataToInsert } =
+      productData;
 
     // 1. Insertar nuevo producto
     const { data: insertedProduct, error: insertProductError } =
       await supabaseClient
         .from("products")
         .insert(productDataToInsert)
-        .select("*") // se obtiene el ID generado automáticamente
+        .select("*")
         .single();
 
     if (insertProductError) throw insertProductError;
 
     const productId = insertedProduct.id;
 
-    // Preparar relaciones producto-categoría
+    // 2. Insertar relaciones producto-categoría
     const relations = categoriesArray.map((category) => ({
       product_id: productId,
       category_id: category.category_id,
@@ -164,6 +181,20 @@ export const createProductWithCategoriesArray = async (productData) => {
       .insert(relations);
 
     if (insertRelationsError) throw insertRelationsError;
+
+    // 3. Insertar primera variante
+    if (firstVariant) {
+      const variantToInsert = {
+        ...firstVariant,
+        product_id: productId,
+      };
+
+      const { error: insertVariantError } = await supabaseClient
+        .from("products_variants")
+        .insert([variantToInsert]);
+
+      if (insertVariantError) throw insertVariantError;
+    }
 
     return {
       status: 200,
@@ -291,5 +322,111 @@ export const updateProductWithCategoriesArray = async (productData) => {
   } catch (error) {
     console.error("Error updating product and categories:", error);
     return { success: false, error };
+  }
+};
+
+export const createProductVariant = async (productVariant) => {
+  try {
+    //1. Crear producto
+    const { error } = await supabaseClient
+      .from("products_variants")
+      .insert([productVariant]);
+
+    if (error) throw error;
+
+    //2. Obtener el producto recientemente creado
+    const { data: fetched, error: fetchError } = await supabaseClient
+      .from("products_variants")
+      .select("*")
+      .order("id", { ascending: false })
+      .limit(1);
+
+    if (fetchError) throw fetchError;
+
+    return {
+      status: 201,
+      message: "Registro creado con éxito",
+      data: fetched[0],
+    };
+  } catch (error) {
+    return {
+      status: 500,
+      message: "Error al crear el producto",
+      error,
+    };
+  }
+};
+
+export const getProductsVariants = async () => {
+  try {
+    const { data, error } = await supabaseClient
+      .from("products_variants")
+      .select(
+        `
+        *,
+        colors:color_id(name, code),
+        sizes: size_id(name)
+      `
+      )
+      .order("id", { ascending: true });
+
+    if (error) throw error;
+
+    return {
+      status: 200,
+      message: "registros obtenidos con éxito",
+      data,
+    };
+  } catch (error) {
+    return {
+      status: 500,
+      message: "Error al obtener los registros",
+      error,
+    };
+  }
+};
+
+export const updateProductVariant = async (productVariantData) => {
+  try {
+    const { id, ...productVariantDataToUpdate } = productVariantData;
+    // Actualizar el producto
+    const { error: updateError } = await supabaseClient
+      .from("products_variants")
+      .update(productVariantDataToUpdate)
+      .eq("id", id);
+
+    if (updateError) throw updateError;
+
+    return {
+      status: 200,
+      message: "Registro actualizado con éxito",
+    };
+  } catch (error) {
+    console.error("Error al actualizar registro:", error);
+    return { success: false, error };
+  }
+};
+
+export const getProductVariant = async (productVariantId) => {
+  try {
+    const { data: productData, error: productError } = await supabaseClient
+      .from("products_variants")
+      .select("*")
+      .eq("id", productVariantId)
+      .single();
+
+    if (productError) throw productError;
+
+    return {
+      status: 200,
+      message: "Registro obtenido con éxito",
+      data: productData,
+    };
+  } catch (error) {
+    return {
+      status: 404,
+      message: "Error al obtener registro",
+      error: error.message,
+    };
   }
 };

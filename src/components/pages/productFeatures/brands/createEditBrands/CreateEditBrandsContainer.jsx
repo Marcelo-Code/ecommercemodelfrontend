@@ -1,22 +1,21 @@
 import { useContext, useEffect, useState } from "react";
-import "../../../../assets/css/generalStyles.css";
 import { useParams } from "react-router-dom";
 
-import { LoadingContainer } from "../../loading/LoadingContainer";
-import { ErrorContainer } from "../../error/ErrorContainer";
+import { LoadingContainer } from "../../../loading/LoadingContainer";
+import { ErrorContainer } from "../../../error/ErrorContainer";
 import {
   errorToastifyAlert,
   successToastifyAlert,
-} from "../../../../utils/alerts";
-import { handleError, sanitizeName } from "../../../../utils/helpers";
-import { GeneralContext } from "../../../../context/GeneralContext";
+} from "../../../../../utils/alerts";
+import { handleError, sanitizeName } from "../../../../../utils/helpers";
+import { GeneralContext } from "../../../../../context/GeneralContext";
 import { CreateEditBrand } from "./CreateEditBrands";
 import {
   createBrand,
   getBrand,
   getBrands,
   updateBrand,
-} from "../../../../services/api/brands";
+} from "../../../../../services/api/brands";
 
 export const CreateEditBrandsContainer = () => {
   const [formData, setFormData] = useState({});

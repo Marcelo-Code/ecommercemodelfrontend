@@ -1,20 +1,19 @@
 import { useContext, useEffect, useState } from "react";
-import "../../../../assets/css/generalStyles.css";
 import { useParams } from "react-router-dom";
 import {
   createCategory,
   getCategories,
   getCategory,
   updateCategory,
-} from "../../../../services/api/categories";
-import { LoadingContainer } from "../../loading/LoadingContainer";
-import { ErrorContainer } from "../../error/ErrorContainer";
+} from "../../../../../services/api/categories";
+import { LoadingContainer } from "../../../loading/LoadingContainer";
+import { ErrorContainer } from "../../../error/ErrorContainer";
 import {
   errorToastifyAlert,
   successToastifyAlert,
-} from "../../../../utils/alerts";
-import { handleError, sanitizeName } from "../../../../utils/helpers";
-import { GeneralContext } from "../../../../context/GeneralContext";
+} from "../../../../../utils/alerts";
+import { handleError, sanitizeName } from "../../../../../utils/helpers";
+import { GeneralContext } from "../../../../../context/GeneralContext";
 import { CreateEditCategories } from "./CreateEditCategories";
 
 export const CreateEditCategoriesContainer = () => {

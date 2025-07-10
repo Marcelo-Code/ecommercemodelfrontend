@@ -66,7 +66,7 @@ export const CreateEditSizesContainer = () => {
         handleError(response);
 
       const action = sizeId ? "actualizado" : "creado";
-      successToastifyAlert(`Color ${action} con éxito`);
+      successToastifyAlert(`Talle ${action} con éxito`);
 
       handleGoBack();
 

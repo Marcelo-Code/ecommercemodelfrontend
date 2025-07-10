@@ -1,7 +1,10 @@
 import { Box, FormGroup, TextField } from "@mui/material";
-import { Icons } from "../../../../assets/Icons";
-import { FormButtonGroupContainer } from "../../../common/formButtonGroup/FormButtonGroupContainer";
-import { buttonColor, generalBackGroundColor } from "../../../../utils/helpers";
+import { Icons } from "../../../../../assets/Icons";
+import { FormButtonGroupContainer } from "../../../../common/formButtonGroup/FormButtonGroupContainer";
+import {
+  buttonColor,
+  generalBackGroundColor,
+} from "../../../../../utils/helpers";
 
 export const CreateEditBrand = (createEditBrandProps) => {
   const {

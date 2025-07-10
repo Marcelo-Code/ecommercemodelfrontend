@@ -18,10 +18,6 @@ import { ContactUsContainer } from "./components/pages/contactUs/ContactUsContai
 import { RecoverPasswordContainer } from "./components/pages/recoverPassword/RecoverPasswordContainer";
 import { UpdatePasswordContainer } from "./components/pages/updatePassword/UpdatePasswordContainer";
 import { SettingsContainer } from "./components/pages/settings/SettingsContainer";
-import { CategoriesListContainer } from "./components/pages/categories/categoriesList/CategoriesListContainer";
-import { CreateEditCategoriesContainer } from "./components/pages/categories/createEditCategories/CreateEditCategoriesContainer";
-import { BrandsListContainer } from "./components/pages/brands/brandsList/BrandsListContainer";
-import { CreateEditBrandsContainer } from "./components/pages/brands/createEditBrands/CreateEditBrandsContainer";
 import { UsersListContainer } from "./components/pages/users/usersList/UsersListContainer";
 import { CreateEditUserContainer } from "./components/pages/users/createEditUser/CreateEditUserContainer";
 import { SpecialOffersContainer } from "./components/pages/specialOffers/SpecialOffersContainer";
@@ -31,10 +27,15 @@ import { FinalizePurchaseContainer } from "./components/pages/purchaseOrders/fin
 import { DownloadPurchaseOrderContainer } from "./components/pages/purchaseOrders/downloadPurchaseOrder/DownloadPurchaseOrderContainer";
 import { ProductDetailContainer } from "./components/pages/products/productDetailTailwind/ProductDetailContainer";
 import { ProductDetailEjemplo } from "./components/pages/products/productDetailTailwind/ProductDetailEjemplo";
-import { ColorsListContainer } from "./components/pages/productFeatures/colors/colorsList/ColorListContainer";
+import { ColorsListContainer } from "./components/pages/productFeatures/colors/colorsList/ColorsListContainer";
 import { CreateEditColorsContainer } from "./components/pages/productFeatures/colors/createEditColors/CreateEditColorsContainer";
 import { SizesListContainer } from "./components/pages/productFeatures/sizes/sizesList/SizesListContainer";
 import { CreateEditSizesContainer } from "./components/pages/productFeatures/sizes/createEditSizes/CreateEditSizesContainer";
+import { CategoriesListContainer } from "./components/pages/productFeatures/categories/categoriesList/CategoriesListContainer";
+import { CreateEditCategoriesContainer } from "./components/pages/productFeatures/categories/createEditCategories/CreateEditCategoriesContainer";
+import { BrandsListContainer } from "./components/pages/productFeatures/brands/brandsList/BrandsListContainer";
+import { CreateEditBrandsContainer } from "./components/pages/productFeatures/brands/createEditBrands/CreateEditBrandsContainer";
+import { CreateEditProductsVariantsContainer } from "./components/pages/products/productsVariants/createEditProductsVariants/CreateEditProductsVariantsContainer";
 
 function App() {
   return (
@@ -240,6 +241,24 @@ function App() {
               element={
                 <ProtectedUserRoute>
                   <CreateEditProductContainer />
+                </ProtectedUserRoute>
+              }
+            />
+            {/* Crear variante */}
+            <Route
+              path="/updateProductsVariants/createProductVariant/:productId"
+              element={
+                <ProtectedUserRoute>
+                  <CreateEditProductsVariantsContainer />
+                </ProtectedUserRoute>
+              }
+            />
+            {/* Actualizar variante */}
+            <Route
+              path="/updateProductsVariants/updateProductVariant/:productId/:productVariantId"
+              element={
+                <ProtectedUserRoute>
+                  <CreateEditProductsVariantsContainer />
                 </ProtectedUserRoute>
               }
             />

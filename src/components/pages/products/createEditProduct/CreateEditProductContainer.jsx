@@ -8,6 +8,7 @@ import { LoadingContainer } from "../../loading/LoadingContainer";
 import { ErrorContainer } from "../../error/ErrorContainer";
 import {
   createProduct,
+  createProductVariant,
   createProductWithCategoriesArray,
   getProduct,
   updateProduct,
@@ -21,9 +22,12 @@ import { deleteImage, uploadImage } from "../../../../services/api/images";
 import { useConfirm } from "../../../../context/ConfirmContext";
 import imageCompression from "browser-image-compression";
 import { handleError } from "../../../../utils/helpers";
+import { getColors } from "../../../../services/api/colors";
+import { getSizes } from "../../../../services/api/sizes";
 
 export const CreateEditProductContainer = () => {
   const [formData, setFormData] = useState({});
+  const [formDataProductVariant, setFormDataProductVariant] = useState({});
   const [modifiedFlag, setModifiedFlag] = useState(false);
   const [isLoadingButton, setIsLoadingButton] = useState(false);
   const [isLoadingImage, setIsLoadingImage] = useState(false);
@@ -31,6 +35,8 @@ export const CreateEditProductContainer = () => {
 
   const [isLoading, setIsLoading] = useState(true);
   const [brands, setBrands] = useState([]);
+  const [sizes, setSizes] = useState([]);
+  const [colors, setColors] = useState([]);
   const [categories, setCategories] = useState([]);
   const [error, setError] = useState(null);
   const [categoryArrayError, setCategoryArrayError] = useState(false);
@@ -42,6 +48,18 @@ export const CreateEditProductContainer = () => {
     previous_price: 0,
     special_offer: "",
     categoriesArray: [],
+    firstVariant: {
+      color_id: null,
+      size_id: null,
+      stock: 0,
+    },
+  };
+
+  const formDataProductVariantInitialState = {
+    product_id: null,
+    stock: 0,
+    color_id: null,
+    size_id: null,
   };
 
   const PRODUCT_STATUS = [
@@ -92,6 +110,18 @@ export const CreateEditProductContainer = () => {
     }
     setDocumentName(documentName);
     fileInputRef.current.click();
+  };
+
+  const handleChangeProductVariant = (event) => {
+    const { name, value } = event.target;
+    const updatedFormProductVariant = {
+      ...formDataProductVariant,
+      [name]: value,
+      product_id: productId,
+    };
+    setFormDataProductVariant(updatedFormProductVariant);
+    if (!modifiedFlag) setModifiedFlag(true);
+    console.log(updatedFormProductVariant);
   };
 
   const handleDeleteImage = async (documentName) => {
@@ -243,39 +273,76 @@ export const CreateEditProductContainer = () => {
     }
   };
 
+  const handleSubmitProductVariant = async (e) => {
+    e.preventDefault();
+
+    setIsLoadingButton(true);
+
+    try {
+      const response = await createProductVariant(formDataProductVariant);
+
+      if (response.status !== 200 && response.status !== 201)
+        handleError(response);
+
+      successToastifyAlert(`Variante creada con éxito`);
+    } catch (error) {
+      console.error(error);
+      setError(error);
+    } finally {
+      setIsLoadingButton(false);
+    }
+  };
+
   useEffect(() => {
     setIsLoading(true);
     Promise.all([
       getBrands(),
       getCategories(),
+      getColors(),
+      getSizes(),
       productId ? getProduct(productId) : Promise.resolve({ data: [null] }),
     ])
-      .then(([brandsResponse, categoriesResponse, productResponse]) => {
-        //Validaciones de marcas
-        if (brandsResponse.status !== 200) handleError(brandsResponse);
+      .then(
+        ([
+          brandsResponse,
+          categoriesResponse,
+          colorsResponse,
+          sizesResponse,
+          productResponse,
+        ]) => {
+          //Validaciones de marcas
+          if (brandsResponse.status !== 200) handleError(brandsResponse);
 
-        //Validaciones de categorias
-        if (categoriesResponse.status !== 200) handleError(categoriesResponse);
+          //Validaciones de categorias
 
-        // Validaciones de producto (si aplica)
-        if (productId && productResponse.status !== 200)
-          handleError(productResponse);
+          //Validaciones de colores
+          if (colorsResponse.status !== 200) handleError(colorsResponse);
 
-        setBrands(brandsResponse.data);
+          //Validaciones de talles
+          if (sizesResponse.status !== 200) handleError(sizesResponse);
 
-        setCategories(
-          categoriesResponse.data.map((category) => ({
-            category_id: category.id,
-            name: category.name,
-          }))
-        );
+          // Validaciones de producto (si aplica)
+          if (productId && productResponse.status !== 200)
+            handleError(productResponse);
 
-        if (productId) {
-          setFormData(productResponse.data);
-        } else {
-          setFormData(formDataInitialState);
+          setBrands(brandsResponse.data);
+          setColors(colorsResponse.data);
+          setSizes(sizesResponse.data);
+
+          setCategories(
+            categoriesResponse.data.map((category) => ({
+              category_id: category.id,
+              name: category.name,
+            }))
+          );
+
+          if (productId) {
+            setFormData(productResponse.data);
+          } else {
+            setFormData(formDataInitialState);
+          }
         }
-      })
+      )
       .catch((error) => {
         console.error("Error en la carga de datos:", error);
         setError(error);
@@ -294,9 +361,14 @@ export const CreateEditProductContainer = () => {
     isLoadingButton,
     brands,
     categories,
+    colors,
+    sizes,
     handleChange,
+    handleChangeProductVariant,
     formData,
+    formDataProductVariant,
     handleSubmit,
+    handleSubmitProductVariant,
     createdProduct,
     handleUploadImage,
     handleFileChange,

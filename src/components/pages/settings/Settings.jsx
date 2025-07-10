@@ -222,6 +222,32 @@ export const Settings = (settingsProps) => {
               <TextField
                 margin="normal"
                 required
+                id="marquee_message"
+                label="Texto marquesina"
+                name="marquee_message"
+                type="text"
+                autoFocus
+                sx={{
+                  backgroundColor: "white",
+                  width: "300px",
+                  "& .MuiOutlinedInput-root": {
+                    "&.Mui-focused fieldset": {
+                      borderColor: generalBackGroundColor,
+                    },
+                  },
+                  "& .MuiInputLabel-root": {
+                    color: "gray", // color normal
+                    "&.Mui-focused": {
+                      color: buttonColor, // color al enfocar
+                    },
+                  },
+                }}
+                value={data.marquee_message}
+                onChange={(e) => handleDataChange(e)}
+              />
+              <TextField
+                margin="normal"
+                required
                 fullWidth
                 name="business_hours"
                 label="Horarios de atencion"
@@ -249,7 +275,6 @@ export const Settings = (settingsProps) => {
               />
               <TextField
                 margin="normal"
-                required
                 fullWidth
                 name="whatsapp_presentation"
                 label="Texto de presentación de whatsapp"
@@ -277,7 +302,6 @@ export const Settings = (settingsProps) => {
               />
               <TextField
                 margin="normal"
-                required
                 fullWidth
                 name="instagram"
                 label="Instagram"
@@ -292,13 +316,138 @@ export const Settings = (settingsProps) => {
                     },
                   },
                   "& .MuiInputLabel-root": {
-                    color: "gray", // color normal
+                    color: "gray",
                     "&.Mui-focused": {
-                      color: buttonColor, // color al enfocar
+                      color: buttonColor,
                     },
                   },
                 }}
                 value={data.instagram}
+                onChange={(e) => handleDataChange(e)}
+              />
+              <TextField
+                margin="normal"
+                fullWidth
+                name="facebook"
+                label="facebook"
+                type="text"
+                id="facebook"
+                sx={{
+                  backgroundColor: "white",
+                  width: "300px",
+                  "& .MuiOutlinedInput-root": {
+                    "&.Mui-focused fieldset": {
+                      borderColor: generalBackGroundColor,
+                    },
+                  },
+                  "& .MuiInputLabel-root": {
+                    color: "gray",
+                    "&.Mui-focused": {
+                      color: buttonColor,
+                    },
+                  },
+                }}
+                value={data.facebook}
+                onChange={(e) => handleDataChange(e)}
+              />
+              <TextField
+                margin="normal"
+                fullWidth
+                name="tik_tok"
+                label="tik_tok"
+                type="text"
+                id="tik_tok"
+                sx={{
+                  backgroundColor: "white",
+                  width: "300px",
+                  "& .MuiOutlinedInput-root": {
+                    "&.Mui-focused fieldset": {
+                      borderColor: generalBackGroundColor,
+                    },
+                  },
+                  "& .MuiInputLabel-root": {
+                    color: "gray",
+                    "&.Mui-focused": {
+                      color: buttonColor,
+                    },
+                  },
+                }}
+                value={data.tik_tok}
+                onChange={(e) => handleDataChange(e)}
+              />
+              <TextField
+                margin="normal"
+                fullWidth
+                name="linkedin"
+                label="linkedIn"
+                type="text"
+                id="linkedin"
+                sx={{
+                  backgroundColor: "white",
+                  width: "300px",
+                  "& .MuiOutlinedInput-root": {
+                    "&.Mui-focused fieldset": {
+                      borderColor: generalBackGroundColor,
+                    },
+                  },
+                  "& .MuiInputLabel-root": {
+                    color: "gray",
+                    "&.Mui-focused": {
+                      color: buttonColor,
+                    },
+                  },
+                }}
+                value={data.linkedin}
+                onChange={(e) => handleDataChange(e)}
+              />
+              <TextField
+                margin="normal"
+                fullWidth
+                name="x"
+                label="X"
+                type="text"
+                id="x"
+                sx={{
+                  backgroundColor: "white",
+                  width: "300px",
+                  "& .MuiOutlinedInput-root": {
+                    "&.Mui-focused fieldset": {
+                      borderColor: generalBackGroundColor,
+                    },
+                  },
+                  "& .MuiInputLabel-root": {
+                    color: "gray",
+                    "&.Mui-focused": {
+                      color: buttonColor,
+                    },
+                  },
+                }}
+                value={data.x}
+                onChange={(e) => handleDataChange(e)}
+              />
+              <TextField
+                margin="normal"
+                fullWidth
+                name="youtube"
+                label="youtube"
+                type="text"
+                id="youtube"
+                sx={{
+                  backgroundColor: "white",
+                  width: "300px",
+                  "& .MuiOutlinedInput-root": {
+                    "&.Mui-focused fieldset": {
+                      borderColor: generalBackGroundColor,
+                    },
+                  },
+                  "& .MuiInputLabel-root": {
+                    color: "gray",
+                    "&.Mui-focused": {
+                      color: buttonColor,
+                    },
+                  },
+                }}
+                value={data.youtube}
                 onChange={(e) => handleDataChange(e)}
               />
               <FormButtonGroupContainer {...formButtonGroupContainerProps} />
