@@ -1,4 +1,3 @@
-import { all } from "@tensorflow/tfjs";
 import { errorToastifyAlert, successToastifyAlert } from "../../utils/alerts";
 import { supabaseClient } from "../config/config";
 
