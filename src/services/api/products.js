@@ -99,7 +99,14 @@ export const getActiveProducts = async () => {
       const { data, error } = supabaseClient
         .from("products")
         .select(
-          "*, brands: brand_id(name), products_categories (category_id, categories(id, name))"
+          `
+            *,
+            brands: brand_id(name),
+            products_categories (
+              category_id,
+              categories(id, name)
+            )
+          `
         )
         .range(from, from + pageSize - 1)
         .eq("active", true)
