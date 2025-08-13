@@ -90,13 +90,13 @@ export const getProducts = async () => {
 };
 
 export const getActiveProducts = async () => {
-  const allProducts = [];
+  const allProducts = []; // Acumulador
   const pageSize = 1000;
   let from = 0;
 
   try {
     while (true) {
-      const { data, error } = supabaseClient
+      const { data, error } = await supabaseClient
         .from("products")
         .select(
           `
@@ -113,18 +113,18 @@ export const getActiveProducts = async () => {
         .order("description", { ascending: true });
 
       if (error) throw error;
-      if (!data || data.length === 0) break;
+      if (!data || data.length === 0) break; // Ya no hay más
 
-      allProducts.push(...data);
-      from += pageSize;
+      allProducts.push(...data); // Acumulás los productos
+      from += pageSize; // Avanzás a la siguiente página
     }
+
     return {
       status: 200,
       message: "registros obtenidos con éxito",
-      data: allProducts,
+      data: allProducts, // Acá devolvés todos juntos
     };
   } catch (error) {
-    console.error(error);
     return {
       status: 500,
       message: "Error al obtener los registros",
