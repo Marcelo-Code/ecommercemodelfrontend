@@ -148,7 +148,7 @@ export const CardActionContainer = ({
       {/* Botón de carrito */}
       <div
         className={`absolute top-0 left-0 w-full h-full flex flex-col items-center transition-transform duration-500 ${
-          isActive ? "translate-y-[40%]" : "translate-y-[85%]"
+          isActive ? "translate-y-[50%]" : "translate-y-[85%]"
         }`}
       >
         <button
