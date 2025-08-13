@@ -10,9 +10,13 @@ import {
   createProductVariant,
   getProduct,
   getProductVariant,
+  getProductVariantsByProductId,
   updateProductVariant,
 } from "../../../../../services/api/products";
-import { successToastifyAlert } from "../../../../../utils/alerts";
+import {
+  errorToastifyAlert,
+  successToastifyAlert,
+} from "../../../../../utils/alerts";
 import { GeneralContext } from "../../../../../context/GeneralContext";
 import { CreateEditProductsVariants } from "./CreateEditProductsVariants";
 
@@ -49,13 +53,28 @@ export const CreateEditProductsVariantsContainer = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    setIsLoadingButton(true);
-
-    const request = productVariantId
-      ? updateProductVariant
-      : createProductVariant;
-
     try {
+      const responseProductVariants = await getProductVariantsByProductId(
+        productId
+      );
+      const exists = responseProductVariants.data.some(
+        (variant) =>
+          variant.color_id === formData.color_id &&
+          variant.size_id === formData.size_id &&
+          variant.id !== productVariantId // para permitir update del mismo registro
+      );
+
+      if (exists) {
+        errorToastifyAlert("Ya existe esa variante");
+        return;
+      }
+
+      setIsLoadingButton(true);
+
+      const request = productVariantId
+        ? updateProductVariant
+        : createProductVariant;
+
       const response = await request(formData);
 
       if (response.status !== 200 && response.status !== 201) {
@@ -75,12 +94,11 @@ export const CreateEditProductsVariantsContainer = () => {
       setModifiedFlag(false);
 
       setModifiedFlag(false);
+      handleGoBack();
     } catch (error) {
-      console.error(error);
       setError(error);
     } finally {
       setIsLoadingButton(false);
-      handleGoBack();
     }
   };
 

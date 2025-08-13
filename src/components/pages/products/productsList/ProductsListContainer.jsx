@@ -2,7 +2,10 @@ import { useContext, useEffect, useMemo, useState } from "react";
 import { Icons } from "../../../../assets/Icons";
 import { ProductsList } from "./ProductsList";
 import { GeneralContext } from "../../../../context/GeneralContext";
-import { getActiveProducts } from "../../../../services/api/products";
+import {
+  getActiveProducts,
+  getProductsVariants,
+} from "../../../../services/api/products";
 import { LoadingContainer } from "../../loading/LoadingContainer";
 import { getUniqueSortedOptions, handleError } from "../../../../utils/helpers";
 import { ErrorContainer } from "../../error/ErrorContainer";
@@ -10,6 +13,7 @@ import ProductsPage from "./product-List";
 
 export const ProductsListContainer = () => {
   const [products, setProducts] = useState([]);
+  const [productsVariants, setProductsVariants] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [filteredProducts, setFilteredProducts] = useState([]);
@@ -21,10 +25,13 @@ export const ProductsListContainer = () => {
   useEffect(() => {
     setIsLoading(true);
 
-    Promise.all([getActiveProducts()])
-      .then(([productsResponse]) => {
+    Promise.all([getActiveProducts(), getProductsVariants()])
+      .then(([productsResponse, productsVariantsResponse]) => {
         //Captura erores en caso de que existan
         if (productsResponse.status !== 200) handleError(productsResponse);
+        if (productsVariantsResponse.status !== 200) {
+          handleError(productsVariantsResponse);
+        }
 
         //Agrega el contador de cada producto
         const productsResponseData = productsResponse.data;
@@ -33,6 +40,7 @@ export const ProductsListContainer = () => {
           counter: 1,
         }));
 
+        setProductsVariants(productsVariantsResponse.data);
         setProducts(counteredProducts);
         setFilteredProducts(counteredProducts);
       })
@@ -68,6 +76,8 @@ export const ProductsListContainer = () => {
 
   if (error) return <ErrorContainer error={error} />;
   if (isLoading) return <LoadingContainer />;
+
+  console.log(productsVariants);
 
   //Array de opciones de ordenamiento
   const SORT_OPTIONS = [
@@ -131,6 +141,7 @@ export const ProductsListContainer = () => {
 
   const productsListProps = {
     ...generalBarContainerProps,
+    productsVariants,
     filteredProducts,
     setFilteredProducts,
     addProduct,

@@ -1,6 +1,7 @@
 import {
   Autocomplete,
   Box,
+  Button,
   CircularProgress,
   FormGroup,
   IconButton,
@@ -16,6 +17,7 @@ import {
   buttonColor,
   deleteColor,
   generalBackGroundColor,
+  hoverButtonColor,
 } from "../../../../utils/helpers";
 import { BackButtonContainer } from "../../../common/backButton/BackButtonContainer";
 import { currencyFormat } from "../../../common/currencyFormat/CurrencyFormatContainer";
@@ -477,10 +479,9 @@ export const CreateEditProduct = (createEditProductProps) => {
                 />
               </DialogContent>
             </Dialog>
-            <BackButtonContainer />
+            {/* <BackButtonContainer /> */}
           </Box>
 
-          <Box className="generalTitle">Variantes</Box>
           {/* <form onSubmit={handleSubmitProductVariant}>
             <FormGroup>
               <Box
@@ -563,7 +564,12 @@ export const CreateEditProduct = (createEditProductProps) => {
               </Box>
             </FormGroup>
           </form> */}
-          <ProductVariantsListContainer productId={productId} />
+
+          {(productId || formData.id) && (
+            <ProductVariantsListContainer
+              productId={productId || formData.id}
+            />
+          )}
         </>
       )}
     </Box>

@@ -8,6 +8,7 @@ import { PaginationContainer } from "../../../common/pagination/PaginationContai
 
 export default function ProductsPage(productsListProps) {
   const {
+    productsVariants,
     filteredProducts,
     setFilteredProducts,
     addProduct,
@@ -73,57 +74,60 @@ export default function ProductsPage(productsListProps) {
       <PaginationContainer items={filteredProducts} itemsPerPage={10}>
         {(recordsToShow) => (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-12 items-stretch">
-            {recordsToShow.map((product) => (
-              <div
-                key={product.id}
-                className="flex flex-col justify-between w-full min-w-[300px] h-full"
-              >
-                {/* Imagen */}
-                <div className="relative">
-                  <div className="relative aspect-[1/1] bg-gray-50 overflow-hidden rounded-lg w-full">
-                    <img
-                      src={product.image1 || "/placeholder.svg"}
-                      alt={product.description}
-                      className="w-full h-full object-contain"
-                    />
+            {recordsToShow.map((product) => {
+              return (
+                <div
+                  key={product.id}
+                  className="flex flex-col justify-between w-full min-w-[300px] h-full"
+                >
+                  {/* Imagen */}
+                  <div className="relative">
+                    <div className="relative aspect-[1/1] bg-gray-50 overflow-hidden rounded-lg w-full">
+                      <img
+                        src={product.image1 || "/placeholder.svg"}
+                        alt={product.description}
+                        className="w-full h-full object-contain"
+                      />
 
-                    <CardActionContainer
-                      product={product}
-                      filteredProducts={filteredProducts}
-                      setFilteredProducts={setFilteredProducts}
-                      addProductToCart={addProductToCart}
-                      addProduct={addProduct}
-                      removeProduct={removeProduct}
-                      activeCardId={activeCardId}
-                      setActiveCardId={setActiveCardId}
-                    />
+                      <CardActionContainer
+                        product={product}
+                        filteredProducts={filteredProducts}
+                        setFilteredProducts={setFilteredProducts}
+                        addProductToCart={addProductToCart}
+                        addProduct={addProduct}
+                        removeProduct={removeProduct}
+                        activeCardId={activeCardId}
+                        setActiveCardId={setActiveCardId}
+                        productsVariants={productsVariants}
+                      />
 
-                    {product.bestSeller && (
-                      <div className="absolute top-3 right-3 bg-red-600 text-white font-bold px-3 py-1 text-xs rounded-md">
-                        BEST SELLER
+                      {product.bestSeller && (
+                        <div className="absolute top-3 right-3 bg-red-600 text-white font-bold px-3 py-1 text-xs rounded-md">
+                          BEST SELLER
+                        </div>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Descripción y precio */}
+                  <div className="flex flex-col justify-between p-4 space-y-4 w-full h-full">
+                    <h3 className="font-semibold text-sm sm:text-base leading-tight min-h-[2.5rem] line-clamp-2">
+                      {product.description}
+                    </h3>
+
+                    <div className="space-y-1">
+                      <div className="flex justify-center text-xl sm:text-2xl font-bold text-generalBackGroundColor">
+                        {formatPrice(product.price)}
                       </div>
-                    )}
-                  </div>
-                </div>
 
-                {/* Descripción y precio */}
-                <div className="flex flex-col justify-between p-4 space-y-4 w-full h-full">
-                  <h3 className="font-semibold text-sm sm:text-base leading-tight min-h-[2.5rem] line-clamp-2">
-                    {product.description}
-                  </h3>
-
-                  <div className="space-y-1">
-                    <div className="flex justify-center text-xl sm:text-2xl font-bold text-generalBackGroundColor">
-                      {formatPrice(product.price)}
-                    </div>
-
-                    <div className="text-xs sm:text-sm text-white text-center">
-                      12 cuotas sin interés
+                      <div className="text-xs sm:text-sm text-white text-center">
+                        12 cuotas sin interés
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         )}
       </PaginationContainer>

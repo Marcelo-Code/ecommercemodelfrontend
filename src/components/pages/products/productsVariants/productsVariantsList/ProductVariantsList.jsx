@@ -19,10 +19,15 @@ import "../../../../../assets/css/generalStyles.css";
 import { Icons } from "../../../../../assets/Icons";
 import { generalBackGroundColor } from "../../../../../utils/helpers";
 import { GeneralBarContainer } from "../../../../layouts/generalBar/GeneralBarContainer";
+import { BackButtonContainer } from "../../../../common/backButton/BackButtonContainer";
 
 export const ProductVariantsList = (productVariantsListProps) => {
-  const { products, handleUpdate, generalBarContainerProps } =
-    productVariantsListProps;
+  const {
+    products,
+    handleUpdateProductVariant,
+    handleDeleteProductVariant,
+    generalBarContainerProps,
+  } = productVariantsListProps;
 
   const StyledTableCell = styled(TableCell)(() => ({
     [`&.${tableCellClasses.head}`]: {
@@ -59,7 +64,9 @@ export const ProductVariantsList = (productVariantsListProps) => {
               </IconButton>
             </Tooltip>
             <Tooltip title="Editar" placement="top-end" arrow>
-              <IconButton onClick={() => handleUpdate(params.row.id)}>
+              <IconButton
+                onClick={() => handleUpdateProductVariant(params.row.id)}
+              >
                 <Icons.EditIcon sx={{ fontSize: "30px", color: "gray" }} />
               </IconButton>
             </Tooltip>
@@ -102,63 +109,104 @@ export const ProductVariantsList = (productVariantsListProps) => {
   const paginationModel = { page: 0, pageSize: 5 };
 
   return (
-    <Box className="generalContainer">
-      {/* <Box className="generalList" sx={{ alignItems: "stretch" }}>
-        <TableContainer component={Paper}>
-          <Table sx={{ minWidth: 700 }} aria-label="customized table">
-            <TableHead>
-              <TableRow>
-                <StyledTableCell align="center">Edición</StyledTableCell>
-                <StyledTableCell align="center">Color</StyledTableCell>
-                <StyledTableCell align="center"></StyledTableCell>
-                <StyledTableCell align="center">Talle</StyledTableCell>
-                <StyledTableCell align="center">Stock</StyledTableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {products.map((product) => (
-                <StyledTableRow key={product.id}>
-                  <StyledTableCell component="th" scope="row">
-                    <Tooltip title="Editar producto">
+    <Box
+      sx={{
+        width: "100%",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        flexDirection: "column",
+        pb: 2,
+        pt: 2,
+      }}
+    >
+      <Box className="generalTitle">Variantes</Box>
+
+      <GeneralBarContainer {...generalBarContainerProps} />
+
+      <Box className="generalSubTitle">{products.length} variantes</Box>
+
+      <TableContainer
+        component={Paper}
+        sx={{
+          // width: "fit-content",
+          width: "90%",
+          maxWidth: "800px",
+          overflowX: "auto",
+          mt: 2,
+          mb: 2,
+        }}
+      >
+        <Table aria-label="customized table">
+          <TableHead>
+            <TableRow>
+              <StyledTableCell align="center">Edición</StyledTableCell>
+              <StyledTableCell align="center">Color</StyledTableCell>
+              <StyledTableCell align="center">Talle</StyledTableCell>
+              <StyledTableCell align="center">Stock</StyledTableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {products.map((product) => (
+              <StyledTableRow key={product.id}>
+                <StyledTableCell align="center">
+                  <Box
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      gap: 1,
+                    }}
+                  >
+                    <Tooltip title="Editar" placement="top-end" arrow>
                       <IconButton
-                        color="primary"
-                        //   onClick={() => handleUpdateProduct(product.id)}
+                        onClick={() => handleUpdateProductVariant(product.id)}
                       >
                         <Icons.EditIcon
                           sx={{ fontSize: "30px", color: "gray" }}
                         />
                       </IconButton>
                     </Tooltip>
-                  </StyledTableCell>
-                  <StyledTableCell component="th" scope="row" align="center">
-                    {product.colors.name}
-                  </StyledTableCell>
-                  <StyledTableCell component="th" scope="row" align="center">
-                    <Box
+                    <Tooltip title="Eliminar" placement="top-end" arrow>
+                      <IconButton>
+                        <Icons.DeleteIcon
+                          sx={{ fontSize: "30px", color: "red" }}
+                          onClick={() => handleDeleteProductVariant(product.id)}
+                        />
+                      </IconButton>
+                    </Tooltip>
+                  </Box>
+                </StyledTableCell>
+                <StyledTableCell
+                  align="left"
+                  sx={{
+                    p: 2,
+                  }}
+                >
+                  <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+                    <Icons.CircleIcon
                       sx={{
-                        width: "30px",
-                        height: "30px",
-                        borderRadius: "50%",
-                        backgroundColor: product.colors.code,
+                        fontSize: 20,
+                        color: product?.colors?.code,
                       }}
                     />
-                  </StyledTableCell>
-                  <StyledTableCell align="center" component="th" scope="row">
-                    {product.sizes.name}
-                  </StyledTableCell>
-                  <StyledTableCell component="th" scope="row">
-                    {product.stock}
-                  </StyledTableCell>
-                </StyledTableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </Box> */}
-      <GeneralBarContainer {...generalBarContainerProps} />
-      <Box className="generalSubTitle">{products.length} variantes</Box>
 
-      <Paper
+                    {product?.colors?.name}
+                  </Box>
+                </StyledTableCell>
+
+                <StyledTableCell align="center" sx={{ p: 1 }}>
+                  {product?.sizes?.name}
+                </StyledTableCell>
+                <StyledTableCell align="center" sx={{ p: 1 }}>
+                  {product?.stock}
+                </StyledTableCell>
+              </StyledTableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+      {/* <Paper
         sx={{
           height: "auto",
           width: "fit-content",
@@ -188,7 +236,8 @@ export const ProductVariantsList = (productVariantsListProps) => {
           //   },
           // }}
         />
-      </Paper>
+      </Paper> */}
+      <BackButtonContainer />
     </Box>
   );
 };

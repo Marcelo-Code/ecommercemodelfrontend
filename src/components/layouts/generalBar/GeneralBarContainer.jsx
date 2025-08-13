@@ -40,7 +40,7 @@ export const GeneralBarContainer = (generalBarContainerProps) => {
     selectedRecords,
     patient,
     professionals,
-    FIELDS_TO_SEARCH,
+    FIELDS_TO_SEARCH = [],
     setFilteredRecords,
     records,
     SORT_OPTIONS,
