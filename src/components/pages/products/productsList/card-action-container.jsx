@@ -2,8 +2,11 @@ import { Link, ShoppingBag, ShoppingCart } from "lucide-react";
 import { Icons } from "../../../../assets/Icons";
 import { buttonColor, generalBackGroundColor } from "../../../../utils/helpers";
 import { Button } from "@mui/material";
+import { useEffect, useState } from "react";
+import { OptionSelect } from "../../../common/optionSelect/OptionSelect";
 
 export const CardActionContainer = ({
+  productsVariants,
   product,
   filteredProducts,
   setFilteredProducts,
@@ -15,12 +18,137 @@ export const CardActionContainer = ({
 }) => {
   const isActive = activeCardId === product.id;
 
+  const [data, setData] = useState({});
+
+  const [selectedColor, setSelectedColor] = useState(null);
+  const [selectedSize, setSelectedSize] = useState(null);
+
+  const [availableColors, setAvailableColors] = useState([]);
+  const [availableSizes, setAvailableSizes] = useState([]);
+
+  // Filtrar variantes con stock > 0 y del producto actual
+  const validVariants = productsVariants.filter(
+    (variant) => variant.product_id === product.id && variant.stock > 0
+  );
+
+  console.log(productsVariants);
+
+  // Filtrar talles cuando se selecciona un color
+  useEffect(() => {
+    if (selectedColor) {
+      const sizes = validVariants
+        .filter((v) => v.color_id === selectedColor.id)
+        .map((v) => ({
+          id: v.size_id,
+          name: v.sizes.name,
+        }));
+
+      // Eliminar duplicados
+      const uniqueSizes = Array.from(
+        new Map(sizes.map((s) => [s.id, s])).values()
+      );
+      setAvailableSizes(uniqueSizes);
+    } else {
+      // Si no hay color seleccionado, mostrar todos los talles disponibles
+      const sizes = validVariants.map((v) => ({
+        id: v.size_id,
+        name: v.sizes.name,
+      }));
+      const uniqueSizes = Array.from(
+        new Map(sizes.map((s) => [s.id, s])).values()
+      );
+      setAvailableSizes(uniqueSizes);
+    }
+  }, [selectedColor]);
+
+  // Filtrar colores cuando se selecciona un talle
+  useEffect(() => {
+    if (selectedSize) {
+      const colors = validVariants
+        .filter((v) => v.size_id === selectedSize.id)
+        .map((v) => ({
+          id: v.color_id,
+          name: v.colors.name,
+        }));
+
+      const uniqueColors = Array.from(
+        new Map(colors.map((c) => [c.id, c])).values()
+      );
+      setAvailableColors(uniqueColors);
+    } else {
+      // Si no hay talle seleccionado, mostrar todos los colores disponibles
+      const colors = validVariants.map((v) => ({
+        id: v.color_id,
+        name: v.colors.name,
+      }));
+      const uniqueColors = Array.from(
+        new Map(colors.map((c) => [c.id, c])).values()
+      );
+      setAvailableColors(uniqueColors);
+    }
+  }, [selectedSize]);
+
+  // Handlers
+  const handleColorChange = (option) => {
+    setSelectedColor(option);
+    // Reset talle si ya no es válido
+    if (
+      selectedSize &&
+      !validVariants.some(
+        (v) =>
+          v.color_id === option.id &&
+          v.size_id === selectedSize.id &&
+          v.product_id === product.id &&
+          v.stock > 0
+      )
+    ) {
+      setSelectedSize(null);
+    }
+  };
+
+  const handleSizeChange = (option) => {
+    setSelectedSize(option);
+    // Reset color si ya no es válido
+    if (
+      selectedColor &&
+      !validVariants.some(
+        (v) =>
+          v.size_id === option.id &&
+          v.color_id === selectedColor.id &&
+          v.product_id === product.id &&
+          v.stock > 0
+      )
+    ) {
+      setSelectedColor(null);
+    }
+  };
+
+  const PRODUCT_SIZES = productsVariants
+    .filter((variant) => variant.product_id === product.id)
+    .map((variant) => ({
+      id: variant.size_id,
+      name: variant.sizes.name,
+    }));
+
+  console.log(productsVariants);
+
+  const PRODUCT_COLORS = productsVariants
+    .filter((variant) => variant.product_id === product.id)
+    .map((variant) => ({
+      id: variant.color_id,
+      name: variant.colors.name,
+    }));
+
+  const handleChange = (event) => {
+    setData({ ...data, [event.target.name]: event.target.value });
+  };
+
   return (
     <>
       {/* Botón de carrito */}
       <div
         className={`absolute top-0 left-0 w-full h-full flex flex-col items-center transition-transform duration-500 ${
-          isActive ? "translate-y-[calc(100%-250px)]" : "translate-y-[85%]"
+          isActive ? "translate-y-[calc(100%-330px)]" : "translate-y-[85%]"
         }`}
       >
         <button
@@ -108,6 +236,38 @@ export const CardActionContainer = ({
                 Detalles
               </button>
             </a>
+
+            {/* Seleccionar Talle */}
+            {availableSizes.length > 1 && (
+              <div className="w-full py-2">
+                <OptionSelect
+                  getOptionLabel={(option) => `${option.name}`}
+                  name="size"
+                  placeholder="Talle"
+                  clients={availableSizes}
+                  value={selectedSize}
+                  onChange={handleSizeChange}
+                  // label={"Seleccioná un color"}
+                  required
+                />
+              </div>
+            )}
+
+            {/* Seleccionar Color */}
+            {availableColors.length > 1 && (
+              <div className="w-full pb-2">
+                <OptionSelect
+                  getOptionLabel={(option) => `${option.name}`}
+                  name="color"
+                  placeholder="Color"
+                  clients={availableColors}
+                  value={selectedColor}
+                  onChange={handleColorChange}
+                  // label={"Seleccioná un color"}
+                  required
+                />
+              </div>
+            )}
           </div>
         </div>
       </div>

@@ -1,3 +1,4 @@
+import { all } from "@tensorflow/tfjs";
 import { errorToastifyAlert, successToastifyAlert } from "../../utils/alerts";
 import { supabaseClient } from "../config/config";
 
@@ -47,24 +48,31 @@ import { supabaseClient } from "../config/config";
 // };
 
 export const getProducts = async () => {
+  const allProducts = [];
+  const pageSize = 1000;
+  let from = 0;
+
   try {
-    const { data, error } = await supabaseClient
-      .from("products")
-      .select(
-        `
-    *,
-    brands: brand_id(name),
-    products_categories (
-      category_id,
-      categories(id, name)
-    )
-  `
-      )
-      .order("description", { ascending: true });
+    while (true) {
+      const { data, error } = supabaseClient
+        .from("products")
+        .select(
+          "*, brands: brand_id(name), products_categories (category_id, categories(id, name))"
+        )
+        .range(from, from + pageSize - 1)
+        .order("description", { ascending: true });
 
-    if (error) throw error;
+      if (error) throw error;
+      if (!data || data.length === 0) break;
 
-    return { status: 200, message: "registros obtenidos con éxito", data };
+      allProducts.push(...data);
+      from += pageSize;
+    }
+    return {
+      status: 200,
+      message: "registros obtenidos con éxito",
+      data: allProducts,
+    };
   } catch (error) {
     return {
       status: 500,
@@ -75,29 +83,31 @@ export const getProducts = async () => {
 };
 
 export const getActiveProducts = async () => {
+  const allProducts = [];
+  const pageSize = 1000;
+  let from = 0;
+
   try {
-    const { data, error } = await supabaseClient
-      .from("products")
-      .select(
-        `
-        *,
-        brands:brand_id(name),
-        products_categories(
-          product_id,
-          category_id,
-          categories:category_id(name)
+    while (true) {
+      const { data, error } = supabaseClient
+        .from("products")
+        .select(
+          "*, brands: brand_id(name), products_categories (category_id, categories(id, name))"
         )
-      `
-      )
-      .eq("active", true)
-      .order("description", { ascending: true });
+        .eq("active", true)
+        .range(from, from + pageSize - 1)
+        .order("description", { ascending: true });
 
-    if (error) throw error;
+      if (error) throw error;
+      if (!data || data.length === 0) break;
 
+      allProducts.push(...data);
+      from += pageSize;
+    }
     return {
       status: 200,
       message: "registros obtenidos con éxito",
-      data,
+      data: allProducts,
     };
   } catch (error) {
     return {
@@ -365,7 +375,8 @@ export const getProductsVariants = async () => {
         `
         *,
         colors:color_id(name, code),
-        sizes: size_id(name)
+        sizes: size_id(id, name),
+        products: product_id(title, description, price, active, image1, special_offer, previous_price)
       `
       )
       .order("id", { ascending: true });
@@ -421,6 +432,51 @@ export const getProductVariant = async (productVariantId) => {
       status: 200,
       message: "Registro obtenido con éxito",
       data: productData,
+    };
+  } catch (error) {
+    return {
+      status: 404,
+      message: "Error al obtener registro",
+      error: error.message,
+    };
+  }
+};
+
+export const deleteProductVariant = async (productVariantId) => {
+  try {
+    const { error: deleteError } = await supabaseClient
+      .from("products_variants")
+      .delete()
+      .eq("id", productVariantId);
+
+    if (deleteError) throw deleteError;
+
+    return {
+      status: 200,
+      message: "Registro eliminado con éxito",
+    };
+  } catch (error) {
+    return {
+      status: 404,
+      message: "Error al eliminar registro",
+      error: error.message,
+    };
+  }
+};
+
+export const getProductVariantsByProductId = async (productId) => {
+  try {
+    const { data, error } = await supabaseClient
+      .from("products_variants")
+      .select("*, colors: color_id(name, code), sizes: size_id(name)")
+      .eq("product_id", productId);
+
+    if (error) throw error;
+
+    return {
+      status: 200,
+      message: "registros obtenidos con éxito",
+      data,
     };
   } catch (error) {
     return {
