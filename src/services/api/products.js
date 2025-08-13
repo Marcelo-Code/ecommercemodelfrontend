@@ -124,6 +124,7 @@ export const getActiveProducts = async () => {
       data: allProducts,
     };
   } catch (error) {
+    console.error(error);
     return {
       status: 500,
       message: "Error al obtener los registros",
