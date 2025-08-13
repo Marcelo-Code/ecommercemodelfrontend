@@ -47,13 +47,13 @@ import { supabaseClient } from "../config/config";
 // };
 
 export const getProducts = async () => {
-  const allProducts = [];
+  const allProducts = []; // Acumulador de productos
   const pageSize = 1000;
   let from = 0;
 
   try {
     while (true) {
-      const { data, error } = supabaseClient
+      const { data, error } = await supabaseClient
         .from("products")
         .select(
           `
@@ -69,15 +69,16 @@ export const getProducts = async () => {
         .order("description", { ascending: true });
 
       if (error) throw error;
-      if (!data || data.length === 0) break;
+      if (!data || data.length === 0) break; // Ya no hay más
 
-      allProducts.push(...data);
-      from += pageSize;
+      allProducts.push(...data); // Acumulás los productos
+      from += pageSize; // Avanzás a la siguiente página
     }
+
     return {
       status: 200,
       message: "registros obtenidos con éxito",
-      data: allProducts,
+      data: allProducts, // Acá devolvés todos juntos
     };
   } catch (error) {
     return {
