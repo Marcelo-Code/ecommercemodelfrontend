@@ -103,12 +103,12 @@ export const ProductsListContainer = () => {
       name: "brands.name",
     },
     {
-      value: "numerical-asc-price",
+      value: "number-asc-price",
       label: "Menor precio",
       name: "price",
     },
     {
-      value: "numerical-desc-price",
+      value: "number-desc-price",
       label: "Mayor precio",
       name: "price",
     },
