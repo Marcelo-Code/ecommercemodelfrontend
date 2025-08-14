@@ -106,8 +106,12 @@ export const GeneralBarContainer = (generalBarContainerProps) => {
     if (newSort !== "none") {
       const sortConfig = SORT_OPTIONS.find((opt) => opt.value === newSort);
       if (sortConfig) {
-        const [type, direction] = newSort.split("-");
+        // const [type, direction] = newSort.split("-");
         const fieldPath = sortConfig.name.split(".");
+
+        const parts = newSort.split("-");
+        const type = parts[0]; // alphabetical / number / date
+        const direction = parts[1]; // asc / desc
 
         const getValue = (obj, path) =>
           path.reduce(
@@ -119,7 +123,11 @@ export const GeneralBarContainer = (generalBarContainerProps) => {
           const aValue = getValue(a, fieldPath);
           const bValue = getValue(b, fieldPath);
 
-          if (aValue === "" || aValue == null) return 1;
+          // if (aValue === "" || aValue == null) return 1;
+          // if (bValue === "" || bValue == null) return -1;
+
+          if (aValue === "" || aValue == null)
+            return bValue === "" || bValue == null ? 0 : 1;
           if (bValue === "" || bValue == null) return -1;
 
           if (type === "alphabetical") {
