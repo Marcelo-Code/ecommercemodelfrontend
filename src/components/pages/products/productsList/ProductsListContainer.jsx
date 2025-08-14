@@ -85,12 +85,12 @@ export const ProductsListContainer = () => {
     {
       value: "alphabetical-asc-description",
       label: "Descripción (A-Z)",
-      name: "description",
+      name: "products.description",
     },
     {
       value: "alphabetical-desc-description",
       label: "Descripción (Z-A)",
-      name: "description",
+      name: "products.description",
     },
     {
       value: "alphabetical-asc-brand",
@@ -105,12 +105,12 @@ export const ProductsListContainer = () => {
     {
       value: "number-asc-price",
       label: "Menor precio",
-      name: "price",
+      name: "products.price",
     },
     {
       value: "number-desc-price",
       label: "Mayor precio",
-      name: "price",
+      name: "products.price",
     },
   ];
 
