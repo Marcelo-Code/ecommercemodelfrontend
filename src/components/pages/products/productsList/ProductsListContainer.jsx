@@ -83,32 +83,32 @@ export const ProductsListContainer = () => {
   const SORT_OPTIONS = [
     { value: "none", label: "Sin ordenar", name: "" },
     {
-      value: "alphabetical-asc",
+      value: "alphabetical-asc-description",
       label: "Descripción (A-Z)",
       name: "products.description",
     },
     {
-      value: "alphabetical-desc",
+      value: "alphabetical-desc-description",
       label: "Descripción (Z-A)",
       name: "products.description",
     },
     {
-      value: "alphabetical-asc",
+      value: "alphabetical-asc-brand",
       label: "Marca (A-Z)",
       name: "brands.name",
     },
     {
-      value: "alphabetical-desc",
+      value: "alphabetical-desc-brand",
       label: "Marca (Z-A)",
       name: "brands.name",
     },
     {
-      value: "number-asc",
+      value: "number-asc-price",
       label: "Menor precio",
       name: "products.price",
     },
     {
-      value: "number-desc",
+      value: "number-desc-price",
       label: "Mayor precio",
       name: "products.price",
     },
