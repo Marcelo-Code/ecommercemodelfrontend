@@ -102,6 +102,16 @@ export const ProductsListContainer = () => {
       label: "Marca (Z-A)",
       name: "brands.name",
     },
+    {
+      value: "numerical-asc-price",
+      label: "Menor precio",
+      name: "price.value",
+    },
+    {
+      value: "numerical-desc-price",
+      label: "Mayor precio",
+      name: "price.value",
+    },
   ];
 
   const FILTER_OPTIONS = [
