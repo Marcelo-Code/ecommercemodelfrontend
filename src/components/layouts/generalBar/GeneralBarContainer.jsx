@@ -78,8 +78,10 @@ export const GeneralBarContainer = (generalBarContainerProps) => {
     newFilters = filters,
     newSort = sortOption
   ) => {
-    const lowerQuery = query.toLowerCase();
+    const lowerQuery = String(query || "").toLowerCase();
     const keywords = lowerQuery.split(" ").filter(Boolean);
+
+    // const keywords = lowerQuery.split(" ").filter(Boolean);
 
     let result = records.filter((record) => {
       // Filtrado por búsqueda
@@ -105,53 +107,58 @@ export const GeneralBarContainer = (generalBarContainerProps) => {
     // Ordenar resultado si se seleccionó opción distinta a "none"
     if (newSort !== "none") {
       const sortConfig = SORT_OPTIONS.find((opt) => opt.value === newSort);
+
       if (sortConfig) {
-        // const [type, direction] = newSort.split("-");
-        const fieldPath = sortConfig.name.split(".");
+        const fieldPath = (sortConfig.field || "").split(".");
+        const { type, direction } = sortConfig;
 
-        const parts = newSort.split("-");
-        const type = parts[0]; // alphabetical / number / date
-        const direction = parts[1]; // asc / desc
+        if (fieldPath.length === 0 || !type || !direction) {
+          console.warn("Sort config incompleto:", sortConfig);
+        } else {
+          const getValue = (obj, path) =>
+            path.reduce(
+              (acc, key) => (acc && acc[key] !== undefined ? acc[key] : ""),
+              obj
+            );
 
-        const getValue = (obj, path) =>
-          path.reduce(
-            (acc, key) => (acc && acc[key] !== undefined ? acc[key] : ""),
-            obj
-          );
+          result = [...result].sort((a, b) => {
+            const aValue = getValue(a, fieldPath);
+            const bValue = getValue(b, fieldPath);
 
-        result = [...result].sort((a, b) => {
-          const aValue = getValue(a, fieldPath);
-          const bValue = getValue(b, fieldPath);
+            if (aValue === "" || aValue == null)
+              return bValue === "" || bValue == null ? 0 : 1;
+            if (bValue === "" || bValue == null) return -1;
 
-          // if (aValue === "" || aValue == null) return 1;
-          // if (bValue === "" || bValue == null) return -1;
+            if (type === "alphabetical") {
+              return direction === "asc"
+                ? String(aValue).localeCompare(String(bValue))
+                : String(bValue).localeCompare(String(aValue));
+            }
 
-          if (aValue === "" || aValue == null)
-            return bValue === "" || bValue == null ? 0 : 1;
-          if (bValue === "" || bValue == null) return -1;
+            if (type === "number") {
+              const parseNumber = (val) => {
+                if (val == null) return NaN;
+                if (typeof val === "number") return val;
+                if (typeof val === "string") {
+                  const clean = val
+                    .replace(/[^0-9.,-]+/g, "")
+                    .replace(",", ".");
+                  return parseFloat(clean);
+                }
+                return NaN;
+              };
 
-          if (type === "alphabetical") {
-            return direction === "asc"
-              ? String(aValue).localeCompare(String(bValue))
-              : String(bValue).localeCompare(String(aValue));
-          }
+              const numA = parseNumber(aValue);
+              const numB = parseNumber(bValue);
 
-          if (type === "date") {
-            return direction === "asc"
-              ? new Date(aValue) - new Date(bValue)
-              : new Date(bValue) - new Date(aValue);
-          }
+              if (isNaN(numA)) return 1;
+              if (isNaN(numB)) return -1;
+              return direction === "asc" ? numA - numB : numB - numA;
+            }
 
-          if (type === "number") {
-            const numA = Number(aValue);
-            const numB = Number(bValue);
-            if (isNaN(numA)) return 1;
-            if (isNaN(numB)) return -1;
-            return direction === "asc" ? numA - numB : numB - numA;
-          }
-
-          return 0;
-        });
+            return 0;
+          });
+        }
       }
     }
 

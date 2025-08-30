@@ -77,40 +77,86 @@ export const ProductsListContainer = () => {
   if (error) return <ErrorContainer error={error} />;
   if (isLoading) return <LoadingContainer />;
 
-  console.log(productsVariants);
+  // console.log(productsVariants);
 
   //Array de opciones de ordenamiento
+  // const SORT_OPTIONS = [
+  //   { value: "none", label: "Sin ordenar", name: "" },
+  //   {
+  //     value: "alphabetical-asc-description",
+  //     label: "Descripción (A-Z)",
+  //     name: "description",
+  //   },
+  //   {
+  //     value: "alphabetical-desc-description",
+  //     label: "Descripción (Z-A)",
+  //     name: "description",
+  //   },
+  //   {
+  //     value: "alphabetical-asc-brand",
+  //     label: "Marca (A-Z)",
+  //     name: "brands.name",
+  //   },
+  //   {
+  //     value: "alphabetical-desc-brand",
+  //     label: "Marca (Z-A)",
+  //     name: "brands.name",
+  //   },
+  //   {
+  //     value: "number-asc-price",
+  //     label: "Menor precio",
+  //     name: "price",
+  //   },
+  //   {
+  //     value: "number-desc-price",
+  //     label: "Mayor precio",
+  //     name: "price",
+  //   },
+  // ];
+
   const SORT_OPTIONS = [
-    { value: "none", label: "Sin ordenar", name: "" },
+    { value: "none", label: "Sin ordenar" },
     {
-      value: "alphabetical-asc-description",
+      value: "description-asc",
       label: "Descripción (A-Z)",
-      name: "products.description",
+      type: "alphabetical",
+      field: "description",
+      direction: "asc",
     },
     {
-      value: "alphabetical-desc-description",
+      value: "description-desc",
       label: "Descripción (Z-A)",
-      name: "products.description",
+      type: "alphabetical",
+      field: "description",
+      direction: "desc",
     },
     {
-      value: "alphabetical-asc-brand",
+      value: "brand-asc",
       label: "Marca (A-Z)",
-      name: "brands.name",
+      type: "alphabetical",
+      field: "brands.name",
+      direction: "asc",
     },
     {
-      value: "alphabetical-desc-brand",
+      value: "brand-desc",
       label: "Marca (Z-A)",
-      name: "brands.name",
+      type: "alphabetical",
+      field: "brands.name",
+      direction: "desc",
     },
     {
-      value: "number-asc-price",
+      value: "price-asc",
       label: "Menor precio",
-      name: "products.price",
+      type: "number",
+      field: "price",
+      direction: "asc",
     },
     {
-      value: "number-desc-price",
+      value: "price-desc",
       label: "Mayor precio",
-      name: "products.price",
+      type: "number",
+      field: "price",
+      direction: "desc",
     },
   ];
 

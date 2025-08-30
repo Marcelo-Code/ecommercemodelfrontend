@@ -31,7 +31,7 @@ export const CardActionContainer = ({
     (variant) => variant.product_id === product.id && variant.stock > 0
   );
 
-  console.log(productsVariants);
+  // console.log(productsVariants);
 
   // Filtrar talles cuando se selecciona un color
   useEffect(() => {
@@ -127,16 +127,16 @@ export const CardActionContainer = ({
     .filter((variant) => variant.product_id === product.id)
     .map((variant) => ({
       id: variant.size_id,
-      name: variant.sizes.name,
+      name: variant.sizes?.name || "Sin talle",
     }));
 
-  console.log(productsVariants);
+  // console.log(productsVariants);
 
   const PRODUCT_COLORS = productsVariants
     .filter((variant) => variant.product_id === product.id)
     .map((variant) => ({
       id: variant.color_id,
-      name: variant.colors.name,
+      name: variant.colors?.name || "Sin color",
     }));
 
   const handleChange = (event) => {

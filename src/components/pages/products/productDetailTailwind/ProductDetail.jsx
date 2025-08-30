@@ -51,8 +51,8 @@ function ImageCarousel({ images }) {
       {/* Main image */}
       <div className="relative aspect-square overflow-hidden rounded-lg">
         <img
-          src={images[currentImage].src || "/placeholder.svg"}
-          alt={images[currentImage].alt}
+          src={images[currentImage]?.src ?? "/images/logo.png"}
+          alt={images[currentImage]?.alt ?? "Nombre del producto"}
           className="h-full w-full object-cover"
         />
 
@@ -266,8 +266,10 @@ export const ProductDetail = (productDetailProps) => {
           <div className="relative">
             <div className="relative aspect-square flex items-center justify-center max-w-2xl bg-white rounded-lg overflow-hidden h-[500px] w-[500px]">
               <img
-                src={PRODUCT_IMAGES[selectedImage].src || "/placeholder.svg"}
-                alt={PRODUCT_IMAGES[selectedImage].alt}
+                src={PRODUCT_IMAGES[selectedImage]?.src ?? "/images/logo2.png"}
+                alt={
+                  PRODUCT_IMAGES[selectedImage]?.alt ?? "Nombre del producto"
+                }
                 className="object-contain rounded-lg"
               />
 

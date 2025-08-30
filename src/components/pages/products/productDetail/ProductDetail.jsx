@@ -62,7 +62,10 @@ export const ProductDetail = ({
       <Box sx={{ marginTop: "10px" }} className="productCardContainer">
         <Box className="productCard">
           <Box className="productCardImage">
-            <img src={product.image} alt={product.name} />
+            <img
+              src={product?.image ?? "/images/foodImage.jpg"}
+              alt={product?.name ?? "Nombre producto"}
+            />
           </Box>
           <Box className="productCardInfo">
             <Box>
